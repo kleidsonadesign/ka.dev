@@ -125,12 +125,7 @@ export function Hero() {
               >
                 Sobre Mim
               </motion.a>
-              <motion.button
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => window.open('#contato', '_self')}
-                className="px-8 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 hover:shadow-[0_8px_20px_rgba(147,51,234,0.3)] cursor-interactive group"
-              >
+             
                 {/* Cole este código no lugar do seu <motion.button> */}
 <motion.a
   href="/CurriculoKleidsonAlmeida.pdf"           // Caminho do arquivo na pasta 'public'
