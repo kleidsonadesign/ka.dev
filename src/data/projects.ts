@@ -31,9 +31,9 @@ export const projectsData: ProjectData[] = [
     description:
       "Sistema de Gerenciamento de Coworking moderno e estilizado focado na produtividade.",
     image:
-      "https://images.unsplash.com/photo-1626187777040-ffb7cb2c5450?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3dvcmtpbmclMjBzcGFjZSUyMG1vZGVybnxlbnwxfHx8fDE3NjA2MDg5MjR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "/images/saascw.png",
     tags: ["Figma", "Node.js", "JavaScript"],
-    link: "https://www.figma.com/make/JdheE1Iw1DbEoHqY8yKmz7/CW-Coworking?node-id=0-1&t=ORIDH5vrGXQRZQDS-1",
+    link: "https://www.figma.com/make/JdheE1Iw1DbEoHqY8yKmz7/CW-Coworking?node-id=0-1&p=f&t=cqZB9xCIhHmgeP8U-0&fullscreen=1",
     github: "#",
   },
   {
@@ -42,7 +42,7 @@ export const projectsData: ProjectData[] = [
     description:
       "Site feito para divulgar trabalhos da vila do artesão de Campina Grande.",
     image:
-      "https://images.unsplash.com/photo-1705598122331-982f9f091d66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kY3JhZnQlMjBhcnRpc2FuJTIwd29ya3Nob3B8ZW58MXx8fHwxNzYwNjQ2MjA2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "/images/vila.png",
     tags: ["HTML", "CSS", "JavaScript"],
     link: "https://kleidsonadesign.github.io/viladoartesao3.github.io/",
     github:
