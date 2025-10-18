@@ -30,7 +30,6 @@ export function Experience() {
     },
   ];
 
-  // 2. Removi o array 'courses' que estava aqui
 
   return (
     <section id="experiencia" className="py-20 relative overflow-hidden">
@@ -96,7 +95,7 @@ export function Experience() {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="text-2xl text-white mb-1">{item.title}</h3>
-        S             <p className="text-primary">{item.company}</p>
+                     <p className="text-primary">{item.company}</p>
                     </div>
                     <span className="text-gray-400 text-sm bg-muted/30 px-3 py-1 rounded-full">
                       {item.period}
