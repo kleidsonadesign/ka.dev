@@ -69,7 +69,7 @@ export function Header() {
   animate={{ opacity: 1, scale: 1 }}
   transition={{ delay: 0.3, duration: 0.6 }}
 />
-/>
+
               
               <motion.span 
                 initial={{ opacity: 0, x: -10 }}
