@@ -133,8 +133,8 @@ export function Hero() {
               >
                 {/* Cole este código no lugar do seu <motion.button> */}
 <motion.a
-  href="/CV-Kleidson.pdf"           // Caminho do arquivo na pasta 'public'
-  download="CV-Kleidson-Alves.pdf"  // Nome sugerido para o download
+  href="/CurriculoKleidsonAlmeida.pdf"           // Caminho do arquivo na pasta 'public'
+  download="CurriculoKleidsonAlmeida.pdf"  // Nome sugerido para o download
   whileHover={{ y: -3 }}
   whileTap={{ scale: 0.95 }}
   className="px-8 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 hover:shadow-[0_8px_20px_rgba(147,51,234,0.3)] cursor-interactive group"
