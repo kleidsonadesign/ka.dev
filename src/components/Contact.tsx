@@ -28,7 +28,7 @@ export function Contact() {
       icon: Phone,
       label: "Telefone",
       value: "+55 (82) 99945-0453",
-      link: "tel:+5582999450453",
+      link: "https://api.whatsapp.com/send/?phone=5582999450453",
     },
     {
       icon: MapPin,
