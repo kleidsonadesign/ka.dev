@@ -26,7 +26,7 @@ export function Header() {
 
     { label: "Experiência", href: "#experiencia" },
 
-    { label: "Contato", href: "#contato" },
+    ,
 
   ];
 
