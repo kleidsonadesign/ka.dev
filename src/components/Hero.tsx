@@ -49,7 +49,7 @@ export function Hero() {
   
   {/* Bola 1 (Original, agora maior e animada) */}
   <motion.div 
-    className="absolute top-1/4 left-1/4 w-[32rem] h-[32rem] bg-primary/10 rounded-full blur-3xl"
+    className="absolute top-1/4 left-1/4 w-[52rem] h-[52rem] bg-primary/10 rounded-full blur-3xl"
     animate={{ 
       scale: [1, 1.1, 1], // Efeito de "pulso"
       x: [0, 20, 0],     // Movimento horizontal
@@ -82,7 +82,7 @@ export function Hero() {
 
   {/* Bola 3 (NOVA) */}
   <motion.div 
-    className="absolute top-1/3 right-1/3 w-[28rem] h-[28rem] bg-primary/5 rounded-full blur-3xl"
+    className="absolute top-1/3 right-1/3 w-[58rem] h-[58rem] bg-primary/5 rounded-full blur-3xl"
     animate={{ 
       scale: [1, 1.15, 1],
       x: [0, 40, 0],
@@ -98,7 +98,7 @@ export function Hero() {
   
   {/* Bola 4 (NOVA) */}
   <motion.div 
-    className="absolute bottom-1/2 left-1/3 w-[24rem] h-[24rem] bg-accent/5 rounded-full blur-3xl"
+    className="absolute bottom-1/2 left-1/3 w-[34rem] h-[34rem] bg-accent/5 rounded-full blur-3xl"
     animate={{ 
       scale: [1, 1.1, 1],
       x: [0, -20, 0],
