@@ -16,8 +16,6 @@ export function Header() {
 
   const menuItems = [
 
-    { label: "Home", href: "#home" },
-
     { label: "Projetos", href: "#projetos" },
 
     { label: "Certificados", href: "#certificados" },
