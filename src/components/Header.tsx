@@ -60,6 +60,15 @@ export function Header() {
               whileHover={{ scale: 1.05 }}
               className="inline-block text-3xl tracking-wider"
             >
+<motion.img
+  src="/images/raio.png" // O caminho que corrigimos antes
+  alt="Raio"
+  className="h-7 w-auto mr-2" // Ajuste o 'h-7' (altura) e 'mr-2' (margem) como preferir
+  initial={{ opacity: 0, scale: 0.5 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ delay: 0.3, duration: 0.6 }} // Animação para entrar
+/>
+              
               <motion.span 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
