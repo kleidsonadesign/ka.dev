@@ -50,11 +50,42 @@ export const certificatesData: CertificateData[] = [
     title: "Getting Started with AI on Jetson Nano",
     institution: "Nvidia",
     date: "2025",
-    image:
-      "https://images.unsplash.com/photo-1658069745206-f772e91a28da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxudmlkaWElMjBqZXRzb24lMjBhaSUyMGhhcmR3YXJlfGVufDF8fHx8MTc2MDY0NzA5Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image:"/images/ianvidia.jpeg"
+      ,
     credentialUrl: "#",
     skills: ["IA", "Jetson Nano", "Deep Learning"],
   },
+
+  {
+    id: "cert-4",
+    title: "Design de Interfaces UI/UX com Adobe XD",
+    institution: "Cursa",
+    date: "2025",
+    image:
+      "/images/crfcursa.png",
+    credentialUrl: "#",
+    skills: ["UI/UX", "Adobe XD", "Interface"],
+  },
+{
+    id: "cert-5",
+    title: "Codando com IA",
+    institution: "Unifacisa",
+    date: "2025",
+    image:
+      "/images/codandocomia.jpeg",
+    credentialUrl: "#",
+    skills: ["IA", "Vibe Coding", "Engenharia de Prompt"],
+  },
+  {
+    id: "cert-6",
+    title: "Introdução a UI/UX",
+    institution: "Le Wagon",
+    date: "2025",
+    image:
+      "/images/crflew.png",
+    credentialUrl: "#",
+    skills: ["UI/UX", "Interface", "Figma"],
+  }
 ];
 
 /**
