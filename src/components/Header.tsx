@@ -61,12 +61,13 @@ export function Header() {
               className="inline-block text-3xl tracking-wider"
             >
 <motion.img
-  src="/images/raio.png" // O caminho que corrigimos antes
+  src="/images/raio.png" 
   alt="Raio"
-  className="h-7 w-auto mr-2" // Ajuste o 'h-7' (altura) e 'mr-2' (margem) como preferir
+  // MUDANÇA NA CLASSE AQUI
+  className="h-full max-h-[1.2em] w-auto mr-2" 
   initial={{ opacity: 0, scale: 0.5 }}
   animate={{ opacity: 1, scale: 1 }}
-  transition={{ delay: 0.3, duration: 0.6 }} // Animação para entrar
+  transition={{ delay: 0.3, duration: 0.6 }}
 />
               
               <motion.span 
