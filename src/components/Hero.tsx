@@ -126,8 +126,8 @@ export function Hero() {
                 Sobre Mim
               </motion.a>
              
-                {/* Cole este código no lugar do seu <motion.button> */}
-<motion.a
+              
+ <motion.a
   href="/CurriculoKleidsonAlmeida.pdf"           // Caminho do arquivo na pasta 'public'
   download="CurriculoKleidsonAlmeida.pdf"  // Nome sugerido para o download
   whileHover={{ y: -3 }}
