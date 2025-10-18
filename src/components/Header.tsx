@@ -63,11 +63,12 @@ export function Header() {
 <motion.img
   src="/images/raio.png" 
   alt="Raio"
-  // MUDANÇA NA CLASSE AQUI
-  className="h-full max-h-[1.2em] w-auto mr-2" 
+  // A ÚNICA MUDANÇA É AQUI
+  className="h-6 w-auto mr-2" 
   initial={{ opacity: 0, scale: 0.5 }}
   animate={{ opacity: 1, scale: 1 }}
   transition={{ delay: 0.3, duration: 0.6 }}
+/>
 />
               
               <motion.span 
