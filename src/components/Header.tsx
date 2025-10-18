@@ -18,8 +18,6 @@ export function Header() {
 
     { label: "Home", href: "#home" },
 
-    { label: "Sobre", href: "#sobre" },
-
     { label: "Projetos", href: "#projetos" },
 
     { label: "Certificados", href: "#certificados" },
