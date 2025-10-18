@@ -131,14 +131,22 @@ export function Hero() {
                 onClick={() => window.open('#contato', '_self')}
                 className="px-8 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 hover:shadow-[0_8px_20px_rgba(147,51,234,0.3)] cursor-interactive group"
               >
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <FileDown size={18} />
-                </motion.div>
-                Baixar CV
-              </motion.button>
+                {/* Cole este código no lugar do seu <motion.button> */}
+<motion.a
+  href="/CV-Kleidson.pdf"           // Caminho do arquivo na pasta 'public'
+  download="CV-Kleidson-Alves.pdf"  // Nome sugerido para o download
+  whileHover={{ y: -3 }}
+  whileTap={{ scale: 0.95 }}
+  className="px-8 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2 hover:shadow-[0_8px_20px_rgba(147,51,234,0.3)] cursor-interactive group"
+>
+  <motion.div
+    whileHover={{ y: -2 }}
+    transition={{ duration: 0.2 }}
+  >
+    <FileDown size={18} />
+  </motion.div>
+  Baixar CV
+</motion.a>
             </div>
 
             <div className="flex gap-4">
