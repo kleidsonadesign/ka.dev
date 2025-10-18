@@ -1,22 +1,43 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Linkedin, Github, MessageSquare } from "lucide-react";
 import { useState } from "react";
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  // Estado para controlar o status do envio (ocioso, enviando, sucesso, erro)
+  const [status, setStatus] = useState("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica de envio do formulário
-    console.log("Form submitted:", formData);
-    alert("Mensagem enviada com sucesso! (Demo)");
-    setFormData({ name: "", email: "", message: "" });
+    setStatus("submitting"); // Atualiza o status para "enviando"
+    
+    const form = e.target as HTMLFormElement;
+    const data = new FormData(form);
+
+    try {
+      // Usamos 'fetch' para enviar os dados para o endpoint do Formspree de forma assíncrona
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setStatus("success"); // Se a resposta for OK, status de sucesso
+        form.reset(); // Limpa o formulário
+      } else {
+        // Se houver um problema na resposta (ex: erro no Formspree)
+        setStatus("error");
+      }
+    } catch (error) {
+      // Se houver um erro de rede (ex: sem internet)
+      console.error("Houve um erro ao enviar o formulário:", error);
+      setStatus("error");
+    }
   };
 
+  // Restante do seu código (sem alterações)
   const contactInfo = [
     {
       icon: Mail,
@@ -104,7 +125,7 @@ export function Contact() {
                     whileHover={{ x: 10, y: -2 }}
                     className="info-block flex items-center gap-4 cursor-pointer group"
                   >
-                    <motion.div 
+                    <motion.div
                       whileHover={{ rotate: 10, scale: 1.1 }}
                       className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/20 group-hover:bg-primary transition-colors"
                     >
@@ -133,8 +154,8 @@ export function Contact() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.15, 
+                    whileHover={{
+                      scale: 1.15,
                       rotate: 10,
                       y: -3
                     }}
@@ -156,7 +177,7 @@ export function Contact() {
               style={{ padding: '2rem', borderRadius: '16px' }}
             >
               <p className="text-gray-200 leading-relaxed">
-                "Transformando <span className="text-primary">ideias</span> em <span className="text-primary">código</span>, 
+                "Transformando <span className="text-primary">ideias</span> em <span className="text-primary">código</span>,
                 criando <span className="text-primary">experiências</span> memoráveis através da tecnologia."
               </p>
             </motion.div>
@@ -169,7 +190,13 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            {/* LINK ATUALIZADO ABAIXO */}
+            <form 
+              action="https://formspree.io/f/mjkalqzo" 
+              method="POST" 
+              onSubmit={handleSubmit} 
+              className="space-y-6"
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -179,9 +206,8 @@ export function Contact() {
                 <label className="block text-sm text-gray-400 mb-2">Nome</label>
                 <input
                   type="text"
+                  name="name" 
                   required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   style={{
                     backgroundColor: '#140C1A',
@@ -202,9 +228,8 @@ export function Contact() {
                 <label className="block text-sm text-gray-400 mb-2">Email</label>
                 <input
                   type="email"
+                  name="email" 
                   required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   style={{
                     backgroundColor: '#140C1A',
@@ -224,9 +249,8 @@ export function Contact() {
               >
                 <label className="block text-sm text-gray-400 mb-2">Mensagem</label>
                 <textarea
+                  name="message" 
                   required
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={6}
                   className="w-full px-4 py-3 text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   style={{
@@ -239,17 +263,22 @@ export function Contact() {
                 />
               </motion.div>
 
+              {/* Mensagens de Status */}
+              {status === "success" && <p className="text-green-400">Mensagem enviada com sucesso!</p>}
+              {status === "error" && <p className="text-red-400">Ocorreu um erro. Tente novamente.</p>}
+
               <motion.button
                 type="submit"
+                disabled={status === "submitting"} // Desabilita o botão durante o envio
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 bg-primary hover:bg-accent text-white rounded-xl transition-all shadow-lg shadow-primary/20 hover:shadow-[0_12px_24px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 cursor-interactive"
+                className="w-full px-8 py-4 bg-primary hover:bg-accent text-white rounded-xl transition-all shadow-lg shadow-primary/20 hover:shadow-[0_12px_24px_rgba(147,51,234,0.4)] flex items-center justify-center gap-2 cursor-interactive disabled:bg-gray-500 disabled:cursor-not-allowed"
               >
-                Enviar Mensagem
+                {status === "submitting" ? "Enviando..." : "Enviar Mensagem"}
                 <Send size={20} />
               </motion.button>
             </form>
