@@ -23,7 +23,7 @@ export function Footer() {
               <span className="text-primary">Kleidson Almeida</span>
             </p>
             <p className="text-gray-500 text-sm mt-2">
-              © 2024 - Todos os direitos reservados
+              © 2025 - Todos os direitos reservados
             </p>
           </motion.div>
 
