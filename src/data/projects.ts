@@ -6,7 +6,7 @@ export const projectsData: ProjectData[] = [
       "SaaS de agendamento inteligente com automação via bots de WhatsApp e integração bidirecional em tempo real com Google Calendar.",
     image: "/images/calendarplus.png", // Não esqueça de colocar a imagem na pasta public/images
     tags: ["React", "Node.js", "Google API", "WhatsApp Bot"],
-    link: "#", "https://calendarplus.vercel.app/"
+    link: "https://calendarplus.vercel.app/",
     github: "https://github.com/kleidsonadesign/calendar-plus", // Ajuste se o nome do repo for diferente
   },
   {
