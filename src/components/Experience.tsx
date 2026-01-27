@@ -28,6 +28,14 @@ export function Experience() {
       period: "Jan. 2023 - Jun. 2027",
       description: "Bacharelado em andamento",
     },
+ {
+       type: "work",
+      icon: Briefcase,
+      title: "Estágio", 
+      company: "INSS",
+      period: " NOV 2025 - Atualmente", 
+      description: "Suporte a sistemas e infraestrutura de TI",
+    
   ];
 
 
