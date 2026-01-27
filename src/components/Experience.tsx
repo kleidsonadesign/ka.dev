@@ -37,7 +37,7 @@ export function Experience() {
       icon: Briefcase,
       title: "Estágio", 
       company: "INSS",
-      period: " NOV 2025 - Atualmente", 
+      period: " Nov. 2025 - Atualmente", 
       description: "Suporte a sistemas e infraestrutura de TI",
   },
     
