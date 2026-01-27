@@ -15,15 +15,6 @@ export function Experience() {
     },
    
     {
-      type: "work",
-      icon: Briefcase,
-      title: "QA",
-      company: "Appen",
-      period: "2024",
-      description: "Quality Assurance em projetos de tecnologia",
-    },
-  
-    {
       type: "education",
       icon: GraduationCap,
       title: "Graduação em Sistemas de Informação",
@@ -31,6 +22,16 @@ export function Experience() {
       period: "Jan. 2023 - Jun. 2027",
       description: "Bacharelado em andamento",
     },
+
+  {
+      type: "work",
+      icon: Briefcase,
+      title: "QA",
+      company: "Appen",
+      period: "2024",
+      description: "Quality Assurance em projetos de tecnologia",
+    },
+      
  {
        type: "work",
       icon: Briefcase,
