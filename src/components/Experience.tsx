@@ -4,6 +4,16 @@ import { Briefcase, GraduationCap } from "lucide-react";
 
 export function Experience() {
   const timeline = [
+
+    {
+      type: "work",
+      icon: Briefcase,
+      title: "Suporte de TI",
+      company: "Colégio Sagrada Família",
+      period: "2020",
+      description: "Suporte técnico e manutenção de sistemas",
+    },
+   
     {
       type: "work",
       icon: Briefcase,
@@ -12,14 +22,7 @@ export function Experience() {
       period: "2024",
       description: "Quality Assurance em projetos de tecnologia",
     },
-    {
-      type: "work",
-      icon: Briefcase,
-      title: "Suporte de TI",
-      company: "Colégio Sagrada Família",
-      period: "2020",
-      description: "Suporte técnico e manutenção de sistemas",
-    },
+  
     {
       type: "education",
       icon: GraduationCap,
