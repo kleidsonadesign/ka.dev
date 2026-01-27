@@ -35,6 +35,7 @@ export function Experience() {
       company: "INSS",
       period: " NOV 2025 - Atualmente", 
       description: "Suporte a sistemas e infraestrutura de TI",
+  },
     
   ];
 
