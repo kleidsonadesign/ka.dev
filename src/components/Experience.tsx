@@ -36,7 +36,7 @@ export function Experience() {
        type: "work",
       icon: Briefcase,
       title: "Estágio", 
-      company: "INSS",
+      company: "INSS (Instituto Nacional do Seguro Social)",
       period: " Nov. 2025 - Atualmente", 
       description: "Suporte a sistemas e infraestrutura de TI",
   },
