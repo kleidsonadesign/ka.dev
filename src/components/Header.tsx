@@ -1,19 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Globe, Sun, ChevronDown, RotateCcw } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
+  // Mantive os teus itens originais aqui
   const menuItems = [
-    { label: "Conteúdo", href: "#conteudo" },
     { label: "Projetos", href: "#projetos" },
-    { label: "Trajetória", href: "#trajetoria" },
-    { label: "Certificações", href: "#certificados" },
+    { label: "Certificados", href: "#certificados" },
+    { label: "Experiência", href: "#experiencia" },
   ];
 
-  // Lógica de Scroll para manter a seção ativa
   useEffect(() => {
     const handleScroll = () => {
       const sections = menuItems.map(item => item.href.substring(1));
@@ -29,96 +28,87 @@ export function Header() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [menuItems]);
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
       className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
     >
-      {/* Container Principal (Cápsula) */}
-      <nav className="flex items-center justify-between w-full max-w-6xl h-16 px-6 bg-[#0F0F0F] border border-white/10 rounded-full shadow-2xl">
+      {/* O "Container" principal com a estética da imagem */}
+      <nav className="flex items-center justify-between w-full max-w-5xl h-14 px-5 bg-[#0A0A0A] border border-white/10 rounded-full shadow-xl">
         
-        {/* Lado Esquerdo: Logo */}
+        {/* Logo Estilizado */}
         <div className="flex items-center">
-          <a href="#home" className="flex items-center justify-center w-10 h-10 bg-white rounded-full text-black font-bold text-xl italic">
+          <a href="#home" className="flex items-center justify-center w-8 h-8 bg-white rounded-full text-black font-bold text-lg italic hover:scale-105 transition-transform">
             K
           </a>
         </div>
 
-        {/* Centro: Links de Navegação (Desktop) */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Menu Desktop: Mantendo teus links e animações de underline */}
+        <div className="hidden md:flex items-center gap-6">
           {menuItems.map((item) => {
             const isActive = activeSection === item.href.substring(1);
             return (
               <a
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-white ${
-                  isActive ? "text-white" : "text-gray-400"
-                }`}
+                className="relative px-2 py-1 text-sm font-medium transition-colors duration-300"
+                style={{ color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)' }}
               >
                 {item.label}
+                {/* Underline animado que você já tinha */}
+                {isActive && (
+                  <motion.span
+                    layoutId="underline"
+                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-white rounded-full"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
               </a>
             );
           })}
         </div>
 
-        {/* Lado Direito: Utils e Botão */}
-        <div className="hidden md:flex items-center gap-4">
-          {/* Botão Versão */}
-          <button className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-full text-xs text-gray-400 hover:bg-white/5">
-            <RotateCcw size={14} />
-            <span>V1</span>
-          </button>
-
-          {/* Botão Idioma */}
-          <button className="text-gray-400 hover:text-white">
-            <Globe size={20} />
-          </button>
-
-          {/* Botão Tema */}
-          <button className="text-gray-400 hover:text-white">
-            <Sun size={20} />
-          </button>
-
-          {/* Botão Contatar (Estilo Pílula Creme) */}
+        {/* Lado Direito: Botão de Contato Estilo Imagem */}
+        <div className="flex items-center gap-3">
           <a
             href="#contato"
-            className="flex items-center gap-3 pl-6 pr-2 py-1.5 bg-[#EAE8E4] hover:bg-white text-black rounded-full font-semibold transition-all group"
+            className="flex items-center gap-2 pl-5 pr-1.5 py-1 bg-[#F5F5F3] hover:bg-white text-black rounded-full font-semibold transition-all group"
           >
-            <span className="text-sm">Contatar</span>
-            <div className="p-1.5 bg-black text-white rounded-full group-hover:scale-110 transition-transform">
-              <ChevronDown size={16} />
+            <span className="text-xs uppercase tracking-wider">Contatar</span>
+            <div className="p-1 bg-[#1A1A1A] text-white rounded-full transition-transform group-hover:rotate-12">
+              <ChevronDown size={14} />
             </div>
           </a>
-        </div>
 
-        {/* Mobile: Botão Menu */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-white p-2"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-white p-1"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </nav>
 
-      {/* Menu Mobile (Dropdown) */}
+      {/* Mobile Menu - Simples e Sólido */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 left-4 right-4 bg-[#0F0F0F] border border-white/10 rounded-2xl p-4 md:hidden flex flex-col gap-4"
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-20 left-4 right-4 bg-[#0A0A0A] border border-white/10 rounded-2xl p-4 md:hidden flex flex-col items-center gap-4"
           >
             {menuItems.map((item) => (
               <a 
                 key={item.href} 
                 href={item.href} 
                 onClick={() => setIsMenuOpen(false)}
-                className="text-gray-400 hover:text-white text-center py-2"
+                className="text-gray-400 hover:text-white py-2"
               >
                 {item.label}
               </a>
