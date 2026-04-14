@@ -1,49 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-
-interface MousePosition {
-  x: number;
-  y: number;
-}
+import { useEffect, useRef } from "react";
 
 export function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [mousePos, setMousePos] = useState<MousePosition>({ x: 0.5, y: 0.3 });
-  const mouseRef = useRef<MousePosition>({ x: 0.5, y: 0.3 });
-  const targetMouseRef = useRef<MousePosition>({ x: 0.5, y: 0.3 });
-
-  // Track mouse movement
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      targetMouseRef.current = {
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      };
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  // Smooth lerp for mouse position
-  useEffect(() => {
-    let animationId: number;
-    
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
-    };
-
-    const updateMousePosition = () => {
-      mouseRef.current = {
-        x: lerp(mouseRef.current.x, targetMouseRef.current.x, 0.05),
-        y: lerp(mouseRef.current.y, targetMouseRef.current.y, 0.05),
-      };
-      setMousePos({ ...mouseRef.current });
-      animationId = requestAnimationFrame(updateMousePosition);
-    };
-
-    animationId = requestAnimationFrame(updateMousePosition);
-    return () => cancelAnimationFrame(animationId);
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -180,13 +138,13 @@ export function AnimatedBackground() {
 
   return (
     <>
-      {/* Gradiente radial reativo ao mouse */}
+      {/* Gradiente radial estático no centro */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-1000"
+        className="fixed inset-0 pointer-events-none z-0"
         style={{
           background: `
             radial-gradient(
-              ellipse 800px 600px at ${mousePos.x * 100}% ${mousePos.y * 100}%, 
+              ellipse 800px 600px at 50% 30%, 
               rgba(147, 51, 234, 0.12) 0%, 
               rgba(147, 51, 234, 0.04) 40%, 
               transparent 70%
@@ -195,20 +153,6 @@ export function AnimatedBackground() {
         }}
       />
       
-      {/* Segundo gradiente mais sutil que segue com delay */}
-      <div
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background: `
-            radial-gradient(
-              ellipse 600px 400px at ${50 + (mousePos.x - 0.5) * 20}% ${40 + (mousePos.y - 0.5) * 20}%, 
-              rgba(168, 85, 247, 0.06) 0%, 
-              transparent 60%
-            )
-          `,
-        }}
-      />
-
       {/* Canvas com particulas */}
       <canvas
         ref={canvasRef}
