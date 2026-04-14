@@ -15,15 +15,10 @@ export function Header() {
 
 
   const menuItems = [
-
     { label: "Projetos", href: "#projetos" },
-
     { label: "Certificados", href: "#certificados" },
-
-    { label: "Experiência", href: "#experiencia" },
-
-    ,
-
+    { label: "Experiencia", href: "#experiencia" },
+    { label: "Korven Lab", href: "#korven-lab" },
   ];
 
 
