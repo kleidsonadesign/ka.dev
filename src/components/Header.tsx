@@ -1,115 +1,98 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, RotateCcw } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  // Mantive os teus itens originais aqui
   const menuItems = [
+    { label: "Conteúdo", href: "#conteudo" },
     { label: "Projetos", href: "#projetos" },
-    { label: "Certificados", href: "#certificados" },
-    { label: "Experiência", href: "#experiencia" },
+    { label: "Trajetória", href: "#trajetoria" },
+    { label: "Certificações", href: "#certificados" },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = menuItems.map(item => item.href.substring(1));
-      const scrollPosition = window.scrollY + 100;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [menuItems]);
-
   return (
+    // O segredo está aqui: h-auto e flex justify-center
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="fixed top-0 left-0 w-full z-50 flex justify-center pt-6 px-4"
     >
-      {/* O "Container" principal com a estética da imagem */}
-      <nav className="flex items-center justify-between w-full max-w-5xl h-14 px-5 bg-[#0A0A0A] border border-white/10 rounded-full shadow-xl">
+      {/* Container com largura máxima definida para alinhar com o conteúdo. 
+        Note o bg-[#111111] bem escuro e borda sutil.
+      */}
+      <nav className="flex items-center justify-between w-full max-w-[1200px] h-[60px] px-4 bg-[#111111] border border-white/5 rounded-full shadow-2xl">
         
-        {/* Logo Estilizado */}
-        <div className="flex items-center">
-          <a href="#home" className="flex items-center justify-center w-8 h-8 bg-white rounded-full text-black font-bold text-lg italic hover:scale-105 transition-transform">
+        {/* Esquerda: Logo (K) */}
+        <div className="flex items-center gap-6">
+          <a href="#home" className="flex items-center justify-center w-9 h-9 bg-white rounded-full text-black font-bold text-lg italic transition-transform hover:scale-110">
             K
           </a>
-        </div>
 
-        {/* Menu Desktop: Mantendo teus links e animações de underline */}
-        <div className="hidden md:flex items-center gap-6">
-          {menuItems.map((item) => {
-            const isActive = activeSection === item.href.substring(1);
-            return (
+          {/* Links de Navegação - Desktop */}
+          <div className="hidden lg:flex items-center gap-8">
+            {menuItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="relative px-2 py-1 text-sm font-medium transition-colors duration-300"
-                style={{ color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)' }}
+                className="text-[13px] font-medium text-gray-400 hover:text-white transition-colors"
               >
                 {item.label}
-                {/* Underline animado que você já tinha */}
-                {isActive && (
-                  <motion.span
-                    layoutId="underline"
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-white rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
               </a>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* Lado Direito: Botão de Contato Estilo Imagem */}
+        {/* Direita: Utils e Botão */}
         <div className="flex items-center gap-3">
+          
+          {/* Versão e Ícones (Desktop) */}
+          <div className="hidden md:flex items-center gap-3 mr-2">
+             <div className="flex items-center gap-1.5 px-2.5 py-1 border border-white/10 rounded-full text-[11px] text-gray-500">
+                <RotateCcw size={12} />
+                <span>V1</span>
+             </div>
+             {/* Bandeira/Idioma fictício */}
+             <div className="w-5 h-5 opacity-80 hover:opacity-100 cursor-pointer">🇺🇸</div>
+             <div className="p-1.5 text-gray-500 hover:text-white cursor-pointer transition-colors">
+                <Menu size={18} className="rotate-90" /> {/* Ícone simulando o seletor de tema */}
+             </div>
+          </div>
+
+          {/* Botão Contatar - O destaque da pílula */}
           <a
             href="#contato"
-            className="flex items-center gap-2 pl-5 pr-1.5 py-1 bg-[#F5F5F3] hover:bg-white text-black rounded-full font-semibold transition-all group"
+            className="flex items-center gap-3 pl-5 pr-1 bg-[#F5F5F3] hover:bg-white text-black rounded-full h-10 transition-all group"
           >
-            <span className="text-xs uppercase tracking-wider">Contatar</span>
-            <div className="p-1 bg-[#1A1A1A] text-white rounded-full transition-transform group-hover:rotate-12">
+            <span className="text-[13px] font-bold">Contatar</span>
+            <div className="flex items-center justify-center w-8 h-8 bg-[#0F0F0F] text-white rounded-full transition-transform group-hover:translate-y-0.5">
               <ChevronDown size={14} />
             </div>
           </a>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white p-1"
+            className="lg:hidden text-white p-2"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu - Simples e Sólido */}
+      {/* Menu Mobile */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-20 left-4 right-4 bg-[#0A0A0A] border border-white/10 rounded-2xl p-4 md:hidden flex flex-col items-center gap-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute top-24 left-4 right-4 bg-[#111111] border border-white/10 rounded-3xl p-6 lg:hidden flex flex-col gap-4 text-center shadow-2xl"
           >
             {menuItems.map((item) => (
-              <a 
-                key={item.href} 
-                href={item.href} 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-gray-400 hover:text-white py-2"
-              >
+              <a key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)} className="text-gray-400 text-lg">
                 {item.label}
               </a>
             ))}
