@@ -1,184 +1,222 @@
-import { motion } from "motion/react";
-import { Linkedin, Github, Mail, FileDown, Languages, Bot, Briefcase } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Linkedin, Github, Mail, FileDown, ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function Hero() {
-  const [displayedName, setDisplayedName] = useState("");
   const [currentSkill, setCurrentSkill] = useState(0);
-  const fullName = "Kleidson Almeida";
   
   const rotatingSkills = [
     "UI/UX Design",
     "Desenvolvimento de Sistemas",
-    "Inteligência Artificial",
+    "Inteligencia Artificial",
     "Web Design"
   ];
   
   useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullName.length) {
-        setDisplayedName(fullName.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 100);
-    
-    return () => clearInterval(typingInterval);
-  }, []);
-  
-  useEffect(() => {
     const skillInterval = setInterval(() => {
       setCurrentSkill((prev) => (prev + 1) % rotatingSkills.length);
-    }, 2500);
+    }, 3000);
     
     return () => clearInterval(skillInterval);
   }, []);
-  
-  const skills = [
-    { icon: Languages, text: "Inglês & Português" },
-    { icon: Bot, text: "IA no Desenvolvimento" },
-    { icon: Briefcase, text: "5 Anos de Experiência" },
-  ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
-        <motion.div 
-          className="absolute top-1/4 left-1/4 w-[52rem] h-[52rem] bg-primary/10 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.1, 1], x: [0, 20, 0], y: [0, -20, 0] }}
-          transition={{ duration: 12, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-[32rem] h-[32rem] bg-accent/10 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.05, 1], x: [0, -30, 0], y: [0, 20, 0] }}
-          transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 3 }}
-        />
-        <motion.div 
-          className="absolute top-1/3 right-1/3 w-[58rem] h-[58rem] bg-primary/5 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.15, 1], x: [0, 40, 0], y: [0, 30, 0] }}
-          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute bottom-1/2 left-1/3 w-[34rem] h-[34rem] bg-accent/5 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.1, 1], x: [0, -20, 0], y: [0, 40, 0] }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1 }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-          {/* Left Side - Profile */}
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          {/* Main Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col items-center lg:items-start"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-center"
           >
-            <motion.h1 className="text-5xl md:text-6xl mb-3 text-center lg:text-left font-bold">
-              <motion.span className="text-white/90">{displayedName.split(' ')[0]}</motion.span>
-              <br />
-              <motion.span className="text-primary/90">{displayedName.split(' ')[1] || ''}</motion.span>
-              <span className="inline-block w-0.5 h-10 md:h-12 bg-primary/60 ml-2 animate-pulse"></span>
-            </motion.h1>
-
-            <motion.div className="mb-8 text-center lg:text-left h-12 overflow-hidden">
-              <motion.p
-                key={currentSkill}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-gray-300 tracking-widest uppercase"
-                style={{ fontSize: '1.125rem', fontWeight: '500', letterSpacing: '0.15em' }}
+            {/* Name Tag */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="mb-8"
+            >
+              <span 
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm tracking-wider"
+                style={{
+                  background: 'rgba(147, 51, 234, 0.1)',
+                  border: '1px solid rgba(147, 51, 234, 0.3)',
+                  color: 'rgba(168, 85, 247, 1)',
+                }}
               >
-                {rotatingSkills[currentSkill]}
-              </motion.p>
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Disponivel para projetos
+              </span>
             </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto">
-              <motion.a
-                href="#sobre"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-primary text-white rounded-full text-center"
+            {/* Big Typography */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="mb-6"
+            >
+              <h1 
+                className="font-bold tracking-tight leading-none"
+                style={{ fontSize: 'clamp(3rem, 12vw, 8rem)' }}
               >
-                Sobre Mim
+                <span className="text-white">KLEIDSON</span>
+              </h1>
+              <h1 
+                className="font-bold tracking-tight leading-none"
+                style={{ fontSize: 'clamp(3rem, 12vw, 8rem)' }}
+              >
+                <span className="text-primary">ALMEIDA</span>
+              </h1>
+            </motion.div>
+
+            {/* Role Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="mb-8"
+            >
+              <p 
+                className="text-gray-400 tracking-widest uppercase"
+                style={{ fontSize: '1.125rem', letterSpacing: '0.25em' }}
+              >
+                FULLSTACK DEVELOPER & UI/UX
+              </p>
+            </motion.div>
+
+            {/* Rotating Skills */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="h-10 mb-12 overflow-hidden"
+            >
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={currentSkill}
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -30, opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-gray-300 text-lg"
+                >
+                  {rotatingSkills[currentSkill]} <span className="text-primary">{">"}_</span>
+                </motion.p>
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Stats Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="flex flex-wrap items-center justify-center gap-8 mb-12"
+            >
+              {[
+                { value: "5+", label: "Anos de Experiencia" },
+                { value: "EN/PT", label: "Ingles & Portugues" },
+                { value: "SI", label: "Sistemas de Informacao" },
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.9 + index * 0.1 }}
+                  className="text-center px-6 py-3"
+                  style={{
+                    borderLeft: index > 0 ? '1px solid rgba(147, 51, 234, 0.3)' : 'none',
+                  }}
+                >
+                  <p className="text-2xl font-bold text-primary">{stat.value}</p>
+                  <p className="text-gray-400 text-sm">{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.6 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+            >
+              <motion.a
+                href="#projetos"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 bg-primary text-white rounded-full text-sm uppercase tracking-wider font-medium flex items-center gap-3"
+                style={{
+                  boxShadow: '0 4px 30px rgba(147, 51, 234, 0.4)',
+                }}
+              >
+                Ver Projetos
+                <span className="text-white/80">{">"}_</span>
               </motion.a>
               <motion.a
                 href="/CurriculoKleidsonAlmeida.pdf"
                 download="CurriculoKleidsonAlmeida.pdf"
-                className="px-8 py-3 border-2 border-primary text-primary rounded-full flex items-center justify-center gap-2 group"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 border border-primary/40 text-primary rounded-full flex items-center gap-3 text-sm uppercase tracking-wider font-medium hover:bg-primary/10 transition-colors"
               >
-                <FileDown size={18} /> Baixar CV
+                <FileDown size={18} /> 
+                CV <span className="text-primary/60">{">"}_</span>
               </motion.a>
-            </div>
+            </motion.div>
 
-            <div className="flex gap-4">
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className="flex items-center justify-center gap-4"
+            >
               {[
-                { icon: Linkedin, href: "https://www.linkedin.com/in/kleidsonadesign/" },
-                { icon: Github, href: "https://github.com/kleidsonadesign" },
-                { icon: Mail, href: "mailto:kleidsonadesign@gmail.com" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/kleidsonadesign/", label: "LinkedIn" },
+                { icon: Github, href: "https://github.com/kleidsonadesign", label: "GitHub" },
+                { icon: Mail, href: "mailto:kleidsonadesign@gmail.com", label: "Email" },
               ].map((social, index) => (
                 <motion.a
-                  key={index}
+                  key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-muted group"
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 flex items-center justify-center rounded-full group transition-all duration-300"
+                  style={{
+                    background: 'rgba(147, 51, 234, 0.1)',
+                    border: '1px solid rgba(147, 51, 234, 0.2)',
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.3 + index * 0.1 }}
                 >
-                  <social.icon size={20} className="text-gray-300 group-hover:text-primary transition-colors duration-300" />
+                  <social.icon size={20} className="text-gray-400 group-hover:text-primary transition-colors duration-300" />
                 </motion.a>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Right Side - Info */}
-          <motion.div className="flex items-center justify-center">
-            <div className="info-block transition-all duration-300 w-full" style={{ padding: '3rem', borderRadius: '24px' }}>
-              <motion.h2 className="mb-10 tracking-tight text-center leading-tight">
-                <motion.span 
-                  className="block text-gray-300"
-                  style={{ fontSize: '2.75rem', letterSpacing: '0.05em', fontWeight: '500' }}
-                >
-                  Developer
-                </motion.span>
-                <motion.span 
-                  className="block text-primary relative inline-block group glow-text mt-1"
-                  style={{ fontSize: '3.75rem', fontWeight: '700', letterSpacing: '0.05em' }}
-                >
-                  <span className="relative z-10">Full Stack</span>
-                  <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-primary/0 via-accent/40 to-primary/0 blur-lg"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }}
-                  />
-                </motion.span>
-                <motion.span 
-                  className="block text-gray-300 mt-1"
-                  style={{ fontSize: '2.75rem', letterSpacing: '0.05em', fontWeight: '500' }}
-                >
-                  & UI/UX
-                </motion.span>
-              </motion.h2>
-
-              <div className="space-y-6 mt-10">
-                {skills.map((skill, index) => {
-                  const IconComponent = skill.icon;
-                  return (
-                    <motion.div
-                      key={index}
-                      className="flex items-center gap-4 cursor-interactive group py-4 border-b border-gray-800/50 last:border-b-0"
-                    >
-                      <IconComponent size={28} className="text-primary group-hover:text-accent transition-colors duration-300" />
-                      <span className="text-gray-300 group-hover:text-white transition-colors duration-300">{skill.text}</span>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          >
+            <motion.a
+              href="#sobre"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="flex flex-col items-center gap-2 text-gray-400 hover:text-primary transition-colors"
+            >
+              <span className="text-xs uppercase tracking-widest">Scroll</span>
+              <ArrowDown size={16} />
+            </motion.a>
           </motion.div>
         </div>
       </div>
