@@ -19,7 +19,7 @@ export function Experience() {
       icon: GraduationCap,
       title: "Graduação em Sistemas de Informação",
       company: "Unifacisa",
-      period: "Jan. 2023 - Jun. 2027",
+      period: "Jan. 2022 - Dez. 2026",
       description: "Bacharelado em andamento",
     },
 
