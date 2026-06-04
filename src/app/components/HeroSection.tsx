@@ -50,8 +50,8 @@ export function HeroSection() {
   const projects = [
     { name: "Wagoo", gradient: "from-white/5 to-white/10", image: wagooImage, url: "https://wagoobot.com/" },
     { name: "Korven Lab", gradient: "from-white/5 to-white/10", image: korvenImage, url: "https://korvenlab.com" },
-    { name: "Papufy", gradient: "from-white/5 to-white/10", image: "/papufy.png", url: "https://papufy.com/" },
-    { name: "2AVendas", gradient: "from-white/5 to-white/10", image: "/2avendas.png", url: "https://2avendas.com/" },
+    { name: "Papufy", gradient: "from-white/5 to-white/10", image: "/images/papupfy.png", url: "https://papufy.com/" },
+    { name: "2AVendas", gradient: "from-white/5 to-white/10", image: "/images/2avendas.png", url: "https://2avendas.com/" },
     { name: "INSS Automation", gradient: "from-white/5 to-white/10", image: inssImage },
   ];
 
