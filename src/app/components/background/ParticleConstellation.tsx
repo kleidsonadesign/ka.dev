@@ -1,9 +1,14 @@
 import { useMemo } from "react";
-import Particles from "@tsparticles/react";
-import type { ISourceOptions } from "@tsparticles/engine";
+import Particles, { ParticlesProvider } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import type { Engine, ISourceOptions } from "@tsparticles/engine";
 
 type ParticleConstellationProps = {
   reducedMotion: boolean;
+};
+
+const initParticles = async (engine: Engine) => {
+  await loadSlim(engine);
 };
 
 export function ParticleConstellation({ reducedMotion }: ParticleConstellationProps) {
@@ -74,12 +79,16 @@ export function ParticleConstellation({ reducedMotion }: ParticleConstellationPr
     [reducedMotion],
   );
 
+  if (reducedMotion) return null;
+
   return (
-    <Particles
-      id="portfolio-particles"
-      className="absolute inset-0"
-      style={{ zIndex: 2 }}
-      options={options}
-    />
+    <ParticlesProvider init={initParticles}>
+      <Particles
+        id="portfolio-particles"
+        className="absolute inset-0"
+        style={{ zIndex: 2 }}
+        options={options}
+      />
+    </ParticlesProvider>
   );
 }
