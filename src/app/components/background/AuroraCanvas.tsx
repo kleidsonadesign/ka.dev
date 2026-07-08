@@ -31,11 +31,11 @@ export function AuroraCanvas({ reducedMotion, mouseX, mouseY }: AuroraCanvasProp
     window.addEventListener("resize", resize);
 
     const bands = [
-      { color: "rgba(255, 255, 255, 0.07)", speed: 0.00035, amp: 90, freq: 0.0028, y: 0.28 },
-      { color: "rgba(255, 255, 255, 0.05)", speed: 0.00028, amp: 70, freq: 0.0035, y: 0.38 },
-      { color: "rgba(255, 255, 255, 0.09)", speed: 0.00042, amp: 55, freq: 0.0042, y: 0.48 },
-      { color: "rgba(255, 255, 255, 0.04)", speed: 0.00031, amp: 110, freq: 0.0022, y: 0.58 },
-      { color: "rgba(255, 255, 255, 0.06)", speed: 0.00025, amp: 65, freq: 0.0031, y: 0.68 },
+      { color: "rgba(255, 255, 255, 0.028)", speed: 0.00035, amp: 90, freq: 0.0028, y: 0.28 },
+      { color: "rgba(255, 255, 255, 0.02)", speed: 0.00028, amp: 70, freq: 0.0035, y: 0.38 },
+      { color: "rgba(255, 255, 255, 0.035)", speed: 0.00042, amp: 55, freq: 0.0042, y: 0.48 },
+      { color: "rgba(255, 255, 255, 0.016)", speed: 0.00031, amp: 110, freq: 0.0022, y: 0.58 },
+      { color: "rgba(255, 255, 255, 0.024)", speed: 0.00025, amp: 65, freq: 0.0031, y: 0.68 },
     ];
 
     const draw = () => {
