@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
+import { useMemo } from "react";
+import Particles from "@tsparticles/react";
 import type { ISourceOptions } from "@tsparticles/engine";
 
 type ParticleConstellationProps = {
@@ -8,14 +7,6 @@ type ParticleConstellationProps = {
 };
 
 export function ParticleConstellation({ reducedMotion }: ParticleConstellationProps) {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => setReady(true));
-  }, []);
-
   const options: ISourceOptions = useMemo(
     () => ({
       fullScreen: { enable: false },
@@ -82,8 +73,6 @@ export function ParticleConstellation({ reducedMotion }: ParticleConstellationPr
     }),
     [reducedMotion],
   );
-
-  if (!ready) return null;
 
   return (
     <Particles

@@ -6,10 +6,18 @@ import { CertificationsSection } from "./components/CertificationsSection";
 import { ContactSection } from "./components/ContactSection";
 import { SpaceBackground } from "./components/SpaceBackground";
 import { LanguageProvider } from "../i18n/LanguageContext";
+import { ParticlesProvider } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import type { Engine } from "@tsparticles/engine";
+
+const initParticles = async (engine: Engine) => {
+  await loadSlim(engine);
+};
 
 export default function App() {
   return (
     <LanguageProvider>
+    <ParticlesProvider init={initParticles}>
     <div className="min-h-screen bg-black dark overflow-x-hidden relative">
       {/* Fundo estrelado dinâmico com paralaxe */}
       <SpaceBackground />
@@ -27,6 +35,7 @@ export default function App() {
         <ContactSection />
       </main>
     </div>
+    </ParticlesProvider>
     </LanguageProvider>
   );
 }
