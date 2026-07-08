@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { MapPin, Clock, Github, Linkedin, FileText } from "lucide-react";
+import { MapPin, Clock, Github, Linkedin, FileText, Youtube, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import wagooImage from "../../imports/wagoo1.png";
 import korvenImage from "../../imports/korven.png";
