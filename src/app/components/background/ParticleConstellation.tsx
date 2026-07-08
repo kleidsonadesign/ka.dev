@@ -5,13 +5,15 @@ import type { Engine, ISourceOptions } from "@tsparticles/engine";
 
 type ParticleConstellationProps = {
   reducedMotion: boolean;
+  mouseX: number;
+  mouseY: number;
 };
 
 const initParticles = async (engine: Engine) => {
   await loadSlim(engine);
 };
 
-export function ParticleConstellation({ reducedMotion }: ParticleConstellationProps) {
+export function ParticleConstellation({ reducedMotion, mouseX, mouseY }: ParticleConstellationProps) {
   const options: ISourceOptions = useMemo(
     () => ({
       fullScreen: { enable: false },
@@ -81,14 +83,26 @@ export function ParticleConstellation({ reducedMotion }: ParticleConstellationPr
 
   if (reducedMotion) return null;
 
+  const parallaxX = (mouseX - window.innerWidth / 2) * 0.02;
+  const parallaxY = (mouseY - window.innerHeight / 2) * 0.02;
+
   return (
-    <ParticlesProvider init={initParticles}>
-      <Particles
-        id="portfolio-particles"
-        className="absolute inset-0"
-        style={{ zIndex: 2 }}
-        options={options}
-      />
-    </ParticlesProvider>
+    <div
+      className="absolute inset-0"
+      style={{
+        zIndex: 2,
+        transform: `translate3d(${parallaxX}px, ${parallaxY}px, 0)`,
+        transition: "transform 0.12s ease-out",
+        willChange: "transform",
+      }}
+    >
+      <ParticlesProvider init={initParticles}>
+        <Particles
+          id="portfolio-particles"
+          className="absolute inset-0"
+          options={options}
+        />
+      </ParticlesProvider>
+    </div>
   );
 }

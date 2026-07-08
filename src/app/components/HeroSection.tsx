@@ -232,7 +232,7 @@ export function HeroSection() {
             <div className="pt-4 lg:pt-3 border-t border-white/5">
               <div className="grid grid-cols-2 gap-2 lg:gap-1.5">
                 <motion.a
-                  href="https://almeida.korvenlab.com/"
+                  href="/resume"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ x: 3, transition: { duration: 0.2 } }}

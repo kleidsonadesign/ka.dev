@@ -1,5 +1,4 @@
 import { useEffect, useRef, useMemo, useState, useCallback } from "react";
-import { AuroraCanvas } from "./background/AuroraCanvas";
 import { ParticleConstellation } from "./background/ParticleConstellation";
 
 interface Star {
@@ -251,9 +250,11 @@ export function SpaceBackground() {
         />
       ))}
 
-      <AuroraCanvas reducedMotion={reducedMotion} mouseX={mouse.x} mouseY={mouse.y} />
-
-      <ParticleConstellation reducedMotion={reducedMotion} />
+      <ParticleConstellation
+        reducedMotion={reducedMotion}
+        mouseX={mouse.x}
+        mouseY={mouse.y}
+      />
 
       {!reducedMotion && (
         <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 3 }} />
