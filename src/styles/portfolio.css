@@ -211,6 +211,7 @@ button {
 
 .ka-orbit-moon {
   pointer-events: none;
+  will-change: transform, opacity;
   filter: drop-shadow(0 0 18px rgba(43, 91, 255, 0.45));
 }
 

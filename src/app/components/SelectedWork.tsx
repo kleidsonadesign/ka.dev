@@ -23,21 +23,21 @@ function WorkCaseBlock({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const phoneY = useTransform(scrollYProgress, [0, 1], [70, -20]);
-  const glow = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0.2, 0.7, 0.25]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const phoneY = useTransform(scrollYProgress, [0, 1], [110, -50]);
+  const textY = useTransform(scrollYProgress, [0, 1], [50, -30]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.92, 1, 0.96]);
+  const panelOpacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0.45, 1, 1, 0.55]);
+  const glow = useTransform(scrollYProgress, [0.15, 0.5, 0.85], [0.15, 0.75, 0.2]);
 
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 48 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       className="ka-work-panel"
       data-cursor="hover"
       data-cursor-label={project.name}
       style={{
+        opacity: panelOpacity,
         background:
           index === 0
             ? "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.35), transparent 42%), linear-gradient(160deg, #0b1020, #070707)"
@@ -62,7 +62,7 @@ function WorkCaseBlock({
           index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
-        <div>
+        <motion.div style={{ y: textY }}>
           <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="ka-eyebrow text-[var(--ka-cobalt)]">
               {String(index + 1).padStart(2, "0")}
@@ -116,16 +116,12 @@ function WorkCaseBlock({
               />
             </a>
           )}
-        </div>
+        </motion.div>
 
         <div className="relative min-h-[300px] md:min-h-[380px] pb-8">
           <motion.div
-            style={{ y: imageY }}
+            style={{ y: imageY, scale: imageScale }}
             className="relative z-[1] ka-media-reveal"
-            initial={{ clipPath: "inset(100% 0 0 0)" }}
-            whileInView={{ clipPath: "inset(0% 0 0 0)" }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
           >
             <BrowserFrame
               src={project.webImage}

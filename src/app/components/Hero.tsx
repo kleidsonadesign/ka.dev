@@ -1,4 +1,10 @@
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import { ArrowDownRight, MapPin } from "lucide-react";
 import { useRef } from "react";
 import { useTranslation } from "../../i18n/LanguageContext";
@@ -34,7 +40,21 @@ function BrandLetters({ text }: { text: string }) {
 
 export function Hero() {
   const { t } = useTranslation();
+  const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const stageY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const moonScrollY = useTransform(scrollYProgress, [0, 1], [0, -140]);
+  const moonScrollX = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const moonGlow = useTransform(scrollYProgress, [0, 0.5, 1], [0.55, 1, 0.25]);
+
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const smoothX = useSpring(mx, { stiffness: 120, damping: 18 });
@@ -43,25 +63,32 @@ export function Hero() {
   const rotateY = useTransform(smoothX, [-40, 40], [-8, 8]);
   const phoneX = useTransform(smoothX, [-40, 40], [-10, 10]);
   const phoneY = useTransform(smoothY, [-40, 40], [-8, 8]);
+  const moonMouseX = useTransform(smoothX, [-40, 40], [10, -14]);
+  const moonMouseY = useTransform(smoothY, [-40, 40], [8, -10]);
+  const moonX = useTransform([moonScrollX, moonMouseX], ([scroll, mouse]) => {
+    return Number(scroll) + Number(mouse);
+  });
+  const moonY = useTransform([moonScrollY, moonMouseY], ([scroll, mouse]) => {
+    return Number(scroll) + Number(mouse);
+  });
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = stageRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 80;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 80;
-    mx.set(x);
-    my.set(y);
+    mx.set(((e.clientX - rect.left) / rect.width - 0.5) * 80);
+    my.set(((e.clientY - rect.top) / rect.height - 0.5) * 80);
   };
 
   const headlineWords = splitWords(`${t.hero.headline} ${t.hero.headlineAccent}`);
 
   return (
     <section
+      ref={sectionRef}
       id="topo"
       className="relative z-10 min-h-[100svh] flex items-center pt-24 pb-12 px-5 md:px-8 overflow-hidden"
     >
       <div className="ka-container w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center relative">
-        <div>
+        <motion.div style={{ y: copyY }}>
           <motion.div
             className="mb-6"
             initial={{ opacity: 0, x: -16 }}
@@ -158,7 +185,7 @@ export function Hero() {
               <span className="ka-eyebrow text-[10px]">Scroll</span>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         <motion.div
           ref={stageRef}
@@ -167,6 +194,7 @@ export function Hero() {
             mx.set(0);
             my.set(0);
           }}
+          style={{ y: stageY, scale: stageScale }}
           className="relative mx-auto w-full max-w-lg lg:max-w-none perspective-[1200px] pb-10"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -177,13 +205,12 @@ export function Hero() {
           <motion.div
             aria-hidden
             className="ka-orbit-moon absolute -top-8 -left-6 md:-left-10 z-[3] h-14 w-14 md:h-16 md:w-16"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            style={{ x: moonX, y: moonY, opacity: moonGlow }}
           >
             <img
               src="/images/ka-moon.png"
               alt=""
-              className="h-full w-full object-contain drop-shadow-[0_0_20px_rgba(43,91,255,0.55)]"
+              className="h-full w-full object-contain drop-shadow-[0_0_24px_rgba(43,91,255,0.65)]"
             />
           </motion.div>
 
@@ -201,8 +228,6 @@ export function Hero() {
             <motion.div
               style={{ x: phoneX, y: phoneY }}
               className="absolute -bottom-6 right-2 md:right-6 z-10 drop-shadow-[0_0_40px_rgba(43,91,255,0.35)]"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
             >
               <PhoneFrame
                 src="/images/projects/shopwagoo/mobile.png?v=prints"
