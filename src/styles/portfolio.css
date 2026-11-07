@@ -520,6 +520,142 @@ button {
   touch-action: pan-y;
 }
 
+/* Path corridor — vertical chapters (distinct from horizontal work rails) */
+.ka-path-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.75rem 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+@media (min-width: 768px) {
+  .ka-path-stage {
+    padding: 2.75rem 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ka-path-stage {
+    padding: 3.25rem 3.5rem;
+  }
+}
+
+.ka-path-meter {
+  height: 2px;
+  width: 100%;
+  max-width: 14rem;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.ka-path-stage--flip .ka-path-meter {
+  margin-left: auto;
+}
+
+.ka-path-meter-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--ka-cobalt);
+  transform: scaleX(0);
+}
+
+.ka-path-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: max(0.75rem, calc((100vw - 72rem) / 2 - 5.25rem));
+  z-index: 8;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 12vh;
+}
+
+@media (min-width: 1280px) {
+  .ka-path-spine {
+    display: flex;
+  }
+}
+
+.ka-path-spine-inner {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  height: min(28rem, 62vh);
+}
+
+.ka-path-spine-track {
+  position: relative;
+  width: 2px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ka-path-spine-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, var(--ka-cobalt), rgba(43, 91, 255, 0.35));
+}
+
+.ka-path-spine-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.15rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+.ka-path-spine-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  opacity: 0.35;
+  transition: opacity 0.45s var(--ka-ease), transform 0.45s var(--ka-ease);
+}
+
+.ka-path-spine-item.is-active {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.ka-path-spine-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+  transition: background 0.45s var(--ka-ease), box-shadow 0.45s var(--ka-ease);
+}
+
+.ka-path-spine-item.is-active .ka-path-spine-dot {
+  background: var(--ka-cobalt);
+  box-shadow: 0 0 0 4px rgba(43, 91, 255, 0.22);
+}
+
+.ka-path-spine-label {
+  font-family: var(--font-display, inherit);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 7.5rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .ka-editorial-panel {
   position: relative;
   overflow: hidden;
