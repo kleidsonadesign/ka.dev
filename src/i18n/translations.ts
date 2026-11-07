@@ -124,14 +124,14 @@ const sharedWorkCasesPt: WorkCase[] = [
   {
     id: "papufy",
     name: "Papufy",
-    role: "Marketplace · Full Stack",
+    role: "Marketplace · Produção",
     year: "2024",
     summary:
-      "Marketplace de trabalhos e serviços locais — busca, categorias, anúncios e fluxo mobile com a mesma clareza do desktop.",
+      "Marketplace B2C para serviços locais: conecta oferta e demanda com busca, categorias e anúncios — no ar com domínio próprio, web e mobile no mesmo produto.",
     highlights: [
-      "Marketplace web completo com busca e filtros",
-      "Experiência mobile nativa no navegador",
-      "UI de categorias, banners e empty states",
+      "Problema de mercado: descoberta e contratação de serviços locais",
+      "API + PostgreSQL sustentando catálogo, busca e fluxos de anúncio",
+      "Aplicação publicada e operando em produção",
     ],
     stack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
     url: "https://papufy.com/",
@@ -141,14 +141,14 @@ const sharedWorkCasesPt: WorkCase[] = [
   {
     id: "wagoobot",
     name: "Wagoo",
-    role: "SaaS · WhatsApp + Gestão",
+    role: "SaaS · Operações",
     year: "2024–2025",
     summary:
-      "Gestão para espaços de atendimento: agendamento no WhatsApp, sinal, comissões e dashboard operacional web + mobile.",
+      "Plataforma SaaS para espaços de atendimento: agenda via WhatsApp, sinal, comissões e painel operacional — automação de rotina que antes dependia de conversa manual.",
     highlights: [
-      "Landing e produto com UX conversacional",
-      "Dashboard mobile de visão geral da operação",
-      "Pagamentos, sinal e comissões no mesmo fluxo",
+      "Automação de agendamento e atendimento pelo WhatsApp",
+      "Split de pagamentos, sinal e comissões no mesmo fluxo",
+      "Dashboard web/mobile para operação em tempo real",
     ],
     stack: ["React", "Node.js", "AWS", "Docker"],
     url: "https://wagoobot.com/",
@@ -158,14 +158,14 @@ const sharedWorkCasesPt: WorkCase[] = [
   {
     id: "shopwagoo",
     name: "Shopwag",
-    role: "E-commerce · Link próprio",
+    role: "E-commerce · Checkout",
     year: "2025",
     summary:
-      "Loja online com link próprio — o cliente compra no site, paga com Pix ou cartão e o pedido chega no painel.",
+      "Loja com link próprio para o negócio vender online: checkout Pix/cartão e pedidos no painel — vitrine e operação no ar, sem depender de marketplace de terceiros.",
     highlights: [
-      "Storefront dark editorial com link dedicado",
-      "Checkout Pix/cartão e painel de pedidos",
-      "Versão mobile da vitrine e da operação",
+      "Storefront publicado com domínio/link dedicado",
+      "Integração de pagamento (Pix e cartão) até o pedido no painel",
+      "Experiência mobile alinhada à operação do lojista",
     ],
     stack: ["React", "TypeScript", "Mercado Pago", "Figma"],
     url: "https://wagoobot.com/",
@@ -178,14 +178,14 @@ const sharedWorkCasesEn: WorkCase[] = [
   {
     id: "papufy",
     name: "Papufy",
-    role: "Marketplace · Full Stack",
+    role: "Marketplace · Production",
     year: "2024",
     summary:
-      "Local services marketplace — search, categories, listings, and a mobile flow with the same clarity as desktop.",
+      "B2C marketplace for local services: matches supply and demand with search, categories, and listings — live on its own domain, web and mobile in one product.",
     highlights: [
-      "Full web marketplace with search and filters",
-      "Mobile browser experience",
-      "Category UI, banners, and empty states",
+      "Market problem: discovering and hiring local services",
+      "API + PostgreSQL behind catalog, search, and listing flows",
+      "Application published and running in production",
     ],
     stack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
     url: "https://papufy.com/",
@@ -195,14 +195,14 @@ const sharedWorkCasesEn: WorkCase[] = [
   {
     id: "wagoobot",
     name: "Wagoo",
-    role: "SaaS · WhatsApp + Ops",
+    role: "SaaS · Operations",
     year: "2024–2025",
     summary:
-      "Operations platform for service spaces: WhatsApp booking, deposits, commissions, and a web + mobile dashboard.",
+      "SaaS for service spaces: WhatsApp booking, deposits, commissions, and an ops dashboard — automation for routines that used to live in manual chat.",
     highlights: [
-      "Conversational UX on the marketing site",
-      "Mobile operations overview dashboard",
-      "Payments, deposits, and commissions in one flow",
+      "WhatsApp-driven booking and customer ops automation",
+      "Payment split, deposits, and commissions in one flow",
+      "Web/mobile dashboard for real-time operations",
     ],
     stack: ["React", "Node.js", "AWS", "Docker"],
     url: "https://wagoobot.com/",
@@ -212,14 +212,14 @@ const sharedWorkCasesEn: WorkCase[] = [
   {
     id: "shopwagoo",
     name: "Shopwag",
-    role: "E-commerce · Own link",
+    role: "E-commerce · Checkout",
     year: "2025",
     summary:
-      "Online store with your own link — customers buy on the site, pay with Pix or card, and orders land in the panel.",
+      "Own-link storefront so the business sells online: Pix/card checkout and orders in the panel — live storefront and ops without a third-party marketplace.",
     highlights: [
-      "Dark editorial storefront with dedicated link",
-      "Pix/card checkout and order panel",
-      "Mobile storefront and ops views",
+      "Published storefront with a dedicated link/domain",
+      "Payment integration (Pix and card) through to the order panel",
+      "Mobile experience aligned with the merchant's ops",
     ],
     stack: ["React", "TypeScript", "Mercado Pago", "Figma"],
     url: "https://wagoobot.com/",
@@ -244,40 +244,40 @@ export const translations: Record<Language, Translation> = {
     },
     hero: {
       brand: "Kleidson Almeida Santos",
-      eyebrow: "Full Stack · Distributed Systems · SaaS",
+      eyebrow: "Full Stack · Backend · SaaS em produção",
       headline: "Projetando plataformas B2B e B2C",
       headlineAccent: "escaláveis",
       summary:
-        "5+ anos em full stack, sistemas distribuídos e integrações FinTech. Node.js/TypeScript, PostgreSQL e APIs resilientes — produtos B2B e infraestrutura cloud fault-tolerant. Inglês fluente. Aberto a remote US/EU.",
-      cta: "Ver trabalho selecionado",
+        "Engenheiro full stack focado em backends e plataformas SaaS em produção: APIs, PostgreSQL, webhooks financeiros e automações que resolvem operação real. 5+ anos, inglês fluente, aberto a remote US/EU.",
+      cta: "Ver produtos em produção",
       secondaryCta: "Baixar CV",
       location: "Campina Grande, Brazil",
       timezone: "Remote · GMT-3",
     },
     work: {
       eyebrow: "01 / Selected Work",
-      title: "Produtos que mostram domínio web e mobile.",
+      title: "Produtos reais, no ar.",
       subtitle:
-        "Cases reais com interfaces desktop e experiência mobile — Papufy, Wagoo e Shopwag.",
-      visit: "Abrir projeto",
+        "SaaS e marketplaces em produção — com domínio próprio, integrações de pagamento e operação web + mobile. Não são tutoriais.",
+      visit: "Abrir produto",
       webLabel: "Web app",
       mobileLabel: "Mobile",
-      moreTitle: "Também no ar",
+      moreTitle: "Também em produção",
       cases: sharedWorkCasesPt,
       more: [
         {
           name: "Korven Lab",
           url: "https://korvenlab.com",
-          blurb: "Lab de produtos SaaS e engenharia",
+          blurb: "Lab de SaaS multi-tenant, pagamentos e engenharia em produção",
         },
         {
           name: "2AVendas",
           url: "https://2avendas.com/",
-          blurb: "CRM B2B multi-tenant e motor de pedidos",
+          blurb: "CRM B2B para representantes: comissões, funil e roteamento de pedidos",
         },
         {
           name: "INSS Automation",
-          blurb: "Automação e sustentação de ambientes críticos",
+          blurb: "Automação e sustentação de infraestrutura crítica em ambiente real",
         },
       ],
     },
@@ -285,7 +285,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "02 / Signal",
       title: "Código em movimento.",
       subtitle:
-        "Atividade no GitHub e as tecnologias que sustentam os produtos no dia a dia.",
+        "Sinal técnico no GitHub e profundidade na stack que sustenta APIs, dados, pagamentos e entrega em produção.",
       profile: "Ver perfil no GitHub",
       commits: "Estatísticas",
       languages: "Top linguagens",
@@ -379,7 +379,8 @@ export const translations: Record<Language, Translation> = {
     contact: {
       eyebrow: "05 / Contato",
       title: "Próximo projeto?",
-      subtitle: "Aberto a contratos remote (US & EU overlap) e projetos full stack/SaaS.",
+      subtitle:
+        "Aberto a times que precisam de backend/full stack para SaaS em produção — remote com overlap US/EU.",
       cta: "Falar no WhatsApp",
       footer: "© 2026 Kleidson Almeida Santos. React · Tailwind · Motion.",
       links: [
@@ -426,40 +427,40 @@ export const translations: Record<Language, Translation> = {
     },
     hero: {
       brand: "Kleidson Almeida Santos",
-      eyebrow: "Full Stack · Distributed Systems · SaaS",
+      eyebrow: "Full Stack · Backend · Production SaaS",
       headline: "Designing B2B and B2C",
       headlineAccent: "scalable platforms",
       summary:
-        "5+ years in full stack engineering, distributed systems, and FinTech integrations. Node.js/TypeScript, PostgreSQL, and resilient APIs — B2B products and fault-tolerant cloud infrastructure. Fluent English. Open to remote US/EU overlap.",
-      cta: "View selected work",
+        "Full stack engineer focused on backends and production SaaS: APIs, PostgreSQL, payment webhooks, and automations that solve real operations. 5+ years, fluent English, open to remote US/EU overlap.",
+      cta: "View live products",
       secondaryCta: "Download resume",
       location: "Campina Grande, Brazil",
       timezone: "Remote · GMT-3",
     },
     work: {
       eyebrow: "01 / Selected Work",
-      title: "Products that prove web and mobile craft.",
+      title: "Real products, live in production.",
       subtitle:
-        "Real cases with desktop interfaces and mobile experience — Papufy, Wagoo, and Shopwag.",
-      visit: "Open project",
+        "SaaS and marketplaces online — own domains, payment integrations, and web + mobile ops. Not tutorials.",
+      visit: "Open product",
       webLabel: "Web app",
       mobileLabel: "Mobile",
-      moreTitle: "Also shipping",
+      moreTitle: "Also in production",
       cases: sharedWorkCasesEn,
       more: [
         {
           name: "Korven Lab",
           url: "https://korvenlab.com",
-          blurb: "SaaS product lab and engineering",
+          blurb: "Multi-tenant SaaS lab — payments and production engineering",
         },
         {
           name: "2AVendas",
           url: "https://2avendas.com/",
-          blurb: "Multi-tenant B2B CRM and order routing",
+          blurb: "B2B CRM for sales reps: commissions, funnel, and order routing",
         },
         {
           name: "INSS Automation",
-          blurb: "Automation and critical environment support",
+          blurb: "Automation and support for critical infrastructure in a live environment",
         },
       ],
     },
@@ -467,7 +468,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "02 / Signal",
       title: "Code in motion.",
       subtitle:
-        "GitHub activity and the technologies that sustain the products day to day.",
+        "GitHub signal and depth in the stack that powers APIs, data, payments, and production delivery.",
       profile: "View GitHub profile",
       commits: "Stats",
       languages: "Top languages",
@@ -561,7 +562,8 @@ export const translations: Record<Language, Translation> = {
     contact: {
       eyebrow: "05 / Contact",
       title: "Next build?",
-      subtitle: "Open to remote contracts (US & EU overlap) and full stack/SaaS work.",
+      subtitle:
+        "Open to teams that need backend/full stack for production SaaS — remote with US/EU overlap.",
       cta: "Chat on WhatsApp",
       footer: "© 2026 Kleidson Almeida Santos. React · Tailwind · Motion.",
       links: [
