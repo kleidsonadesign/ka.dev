@@ -122,7 +122,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#090a10",
     glow: "rgba(43, 91, 255, 0.24)",
     glowAlt: "rgba(255, 255, 255, 0.07)",
-    name: "PATH",
+    name: "",
     ink: "#f7f7f8",
   },
   "path-edu": {
@@ -130,7 +130,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#0a0c14",
     glow: "rgba(43, 91, 255, 0.32)",
     glowAlt: "rgba(255, 255, 255, 0.08)",
-    name: "EDU",
+    name: "",
     ink: "#f0f3ff",
   },
   "path-korven": {
@@ -138,7 +138,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#070b16",
     glow: "rgba(43, 91, 255, 0.45)",
     glowAlt: "rgba(255, 255, 255, 0.08)",
-    name: "KORVEN",
+    name: "",
     ink: "#eef2ff",
   },
   "path-inss": {
@@ -146,7 +146,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#0a1010",
     glow: "rgba(46, 160, 120, 0.28)",
     glowAlt: "rgba(255, 255, 255, 0.07)",
-    name: "INSS",
+    name: "",
     ink: "#eaf6f1",
   },
   "path-appen": {
@@ -154,7 +154,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#0a0e14",
     glow: "rgba(90, 140, 180, 0.28)",
     glowAlt: "rgba(255, 255, 255, 0.07)",
-    name: "APPEN",
+    name: "",
     ink: "#eef3f8",
   },
   "path-freelance": {
@@ -162,7 +162,7 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#100e08",
     glow: "rgba(232, 168, 74, 0.24)",
     glowAlt: "rgba(255, 255, 255, 0.07)",
-    name: "SOLO",
+    name: "",
     ink: "#fff6eb",
   },
   certificacoes: {

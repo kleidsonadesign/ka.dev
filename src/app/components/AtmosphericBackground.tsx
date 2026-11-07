@@ -84,16 +84,18 @@ export function AtmosphericBackground() {
         className="fixed inset-0 z-[2] pointer-events-none overflow-hidden flex items-center justify-center"
       >
         <AnimatePresence initial={false}>
-          <motion.div
-            key={scene.id}
-            className="ka-scene-name select-none absolute inset-0 flex items-center justify-center"
-            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -16, filter: "blur(6px)" }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {scene.name}
-          </motion.div>
+          {scene.name ? (
+            <motion.div
+              key={scene.id}
+              className="ka-scene-name select-none absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -16, filter: "blur(6px)" }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {scene.name}
+            </motion.div>
+          ) : null}
         </AnimatePresence>
       </div>
 
