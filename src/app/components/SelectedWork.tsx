@@ -245,14 +245,14 @@ export function SelectedWork() {
           ref={containerRef}
           className="ka-work-journey relative"
           data-scene-rail=""
-          style={{ height: `${count * 100}vh` }}
+          style={{ height: `${cases.length * 100}vh` }}
         >
           <div className="ka-work-pin sticky top-0 h-[100svh] overflow-hidden">
             <motion.div
               className="ka-work-track flex h-full will-change-transform"
               style={{
                 x,
-                width: slideWidth * count,
+                width: slideWidth * cases.length,
               }}
             >
               {cases.map((project, index) => (
