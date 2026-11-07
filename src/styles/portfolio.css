@@ -400,43 +400,6 @@ button {
   }
 }
 
-.ka-brand-mega {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  line-height: 0.82;
-  font-size: clamp(4.2rem, 18vw, 11rem);
-  text-transform: uppercase;
-}
-
-.ka-cobalt-banner {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #030303;
-  background: var(--ka-cobalt);
-  padding: 0.55rem 0.9rem;
-  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-}
-
-.ka-hero-scanlines {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.12) 2px,
-    rgba(0, 0, 0, 0.12) 4px
-  );
-  mix-blend-mode: multiply;
-  opacity: 0.35;
-}
-
-.ka-work-bleed {
-  position: relative;
-}
-
 .ka-editorial-panel {
   position: relative;
   overflow: hidden;
