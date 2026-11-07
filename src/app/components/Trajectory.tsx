@@ -6,11 +6,7 @@ export function Trajectory() {
   const experiences = [...t.trajectory.corporate, t.trajectory.freelance];
 
   return (
-    <section id="trajetoria" className="ka-section relative overflow-hidden">
-      <div aria-hidden className="ka-watermark absolute right-[-6%] bottom-10 text-[22vw] opacity-85">
-        PATH
-      </div>
-
+    <section id="trajetoria" data-scene="trajetoria" className="ka-section relative overflow-hidden">
       <div className="ka-container relative">
         <motion.div
           initial={{ opacity: 0, y: 28 }}

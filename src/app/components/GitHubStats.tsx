@@ -120,11 +120,7 @@ export function GitHubStats() {
     : [];
 
   return (
-    <section id="github" className="ka-section relative overflow-hidden">
-      <div aria-hidden className="ka-watermark absolute -right-6 top-8 text-[26vw] opacity-90">
-        GIT
-      </div>
-
+    <section id="github" data-scene="github" className="ka-section relative overflow-hidden">
       <div className="ka-container relative">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-end mb-12 md:mb-16">
           <motion.div

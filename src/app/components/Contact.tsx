@@ -12,21 +12,15 @@ export function Contact() {
   );
 
   return (
-    <section id="contato" className="relative overflow-hidden pt-10 pb-8">
+    <section id="contato" data-scene="contato" className="relative overflow-hidden pt-10 pb-8">
       <div
         className="ka-contact-bleed mx-4 md:mx-6 lg:mx-8 rounded-[28px] md:rounded-[40px] overflow-hidden relative"
         style={{
           background:
-            "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.4), transparent 42%), radial-gradient(ellipse at 10% 100%, rgba(255,255,255,0.08), transparent 40%), linear-gradient(165deg, #0a0e1a 0%, #050505 55%, #030303 100%)",
+            "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.28), transparent 42%), radial-gradient(ellipse at 10% 100%, rgba(255,255,255,0.06), transparent 40%), linear-gradient(165deg, rgba(10,14,26,0.72) 0%, rgba(5,5,5,0.45) 55%, rgba(3,3,3,0.35) 100%)",
         }}
       >
         <div aria-hidden className="ka-neon-scan opacity-40" />
-        <div
-          aria-hidden
-          className="ka-watermark absolute -right-4 bottom-0 text-[28vw] md:text-[18vw] opacity-90"
-        >
-          HELLO
-        </div>
 
         <motion.div
           aria-hidden

@@ -5,7 +5,7 @@ export function Certifications() {
   const { t } = useTranslation();
 
   return (
-    <section id="certificacoes" className="ka-section relative overflow-hidden">
+    <section id="certificacoes" data-scene="certificacoes" className="ka-section relative overflow-hidden">
       <div className="ka-container relative">
         <motion.div
           initial={{ opacity: 0, y: 28 }}

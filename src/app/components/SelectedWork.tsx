@@ -40,16 +40,17 @@ function WorkCaseBlock({
     <motion.article
       ref={ref}
       className="ka-work-panel"
+      data-scene={project.id}
       data-cursor="hover"
       data-cursor-label={project.name}
       style={{
         opacity: panelOpacity,
         background:
           index === 0
-            ? "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.35), transparent 42%), linear-gradient(160deg, #0b1020, #070707)"
+            ? "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.22), transparent 46%), linear-gradient(160deg, rgba(11,16,32,0.55), rgba(7,7,7,0.28))"
             : index === 1
-              ? "radial-gradient(ellipse at 10% 10%, rgba(255,255,255,0.14), transparent 40%), linear-gradient(160deg, #101010, #060606)"
-              : "radial-gradient(ellipse at 80% 20%, rgba(43,91,255,0.22), transparent 45%), linear-gradient(160deg, #0c0f18, #050505)",
+              ? "radial-gradient(ellipse at 10% 10%, rgba(255,255,255,0.1), transparent 42%), linear-gradient(160deg, rgba(16,16,16,0.5), rgba(6,6,6,0.25))"
+              : "radial-gradient(ellipse at 80% 20%, rgba(232,168,74,0.14), transparent 46%), linear-gradient(160deg, rgba(12,15,24,0.5), rgba(5,5,5,0.25))",
       }}
     >
       <motion.div
@@ -57,9 +58,11 @@ function WorkCaseBlock({
         style={{
           opacity: glow,
           background:
-            index % 2 === 0
-              ? "radial-gradient(ellipse at 80% 20%, rgba(43,91,255,0.35), transparent 50%)"
-              : "radial-gradient(ellipse at 20% 30%, rgba(255,255,255,0.16), transparent 55%)",
+            index === 0
+              ? "radial-gradient(ellipse at 80% 20%, rgba(43,91,255,0.32), transparent 52%)"
+              : index === 1
+                ? "radial-gradient(ellipse at 20% 30%, rgba(46,180,110,0.22), transparent 55%)"
+                : "radial-gradient(ellipse at 75% 25%, rgba(232,168,74,0.2), transparent 55%)",
         }}
       />
 
@@ -161,6 +164,7 @@ export function SelectedWork() {
     <section id="trabalho" className="ka-section">
       <div className="ka-container">
         <motion.div
+          data-scene="work"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2, margin: "-60px" }}

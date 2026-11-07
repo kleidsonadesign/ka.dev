@@ -5,11 +5,7 @@ export function Toolkit() {
   const { t } = useTranslation();
 
   return (
-    <section id="toolkit" className="ka-section relative overflow-hidden">
-      <div aria-hidden className="ka-watermark absolute left-[-4%] top-1/3 text-[20vw] opacity-85">
-        STACK
-      </div>
-
+    <section id="toolkit" data-scene="toolkit" className="ka-section relative overflow-hidden">
       <div className="ka-container relative">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-20 mb-6">
           <motion.div

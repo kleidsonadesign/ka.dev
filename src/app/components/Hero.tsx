@@ -87,6 +87,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="topo"
+      data-scene="hero"
       className="relative z-10 min-h-[100svh] flex items-center pt-24 pb-12 px-5 md:px-8 overflow-hidden"
     >
       <div className="ka-container w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center relative">
