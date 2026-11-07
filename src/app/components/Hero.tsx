@@ -28,10 +28,11 @@ function BrandLetters({ text }: { text: string }) {
               key={`${word}-${ci}`}
               className="inline-block"
               initial={{ opacity: 0, y: "0.55em", rotateX: -40 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: false, amount: 0.4 }}
               transition={{
                 duration: 0.55,
-                delay: 0.28 + i * 0.028,
+                delay: i * 0.028,
                 ease: [0.22, 1, 0.36, 1],
               }}
               style={{ transformOrigin: "50% 100%" }}
@@ -93,8 +94,9 @@ export function Hero() {
           <motion.div
             className="mb-6"
             initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.55, delay: 0.15 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.6 }}
+            transition={{ duration: 0.55 }}
           >
             <span className="ka-cobalt-banner inline-flex items-center gap-2">
               <span className="relative flex h-1.5 w-1.5">
@@ -120,10 +122,11 @@ export function Hero() {
                   key={`${word}-${i}`}
                   className={isAccent ? "italic text-white/50" : ""}
                   initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.6 }}
                   transition={{
                     duration: 0.5,
-                    delay: 0.4 + i * 0.05,
+                    delay: i * 0.05,
                     ease: [0.22, 1, 0.36, 1],
                   }}
                 >
@@ -136,8 +139,9 @@ export function Hero() {
           <motion.p
             className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed mb-10"
             initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.75 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.55 }}
           >
             {t.hero.summary}
           </motion.p>
@@ -145,8 +149,9 @@ export function Hero() {
           <motion.div
             className="flex flex-wrap items-center gap-3"
             initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.85 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
           >
             <a
               href="#trabalho"
@@ -172,8 +177,9 @@ export function Hero() {
           <motion.div
             className="mt-12 flex flex-wrap items-center gap-6"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.45 }}
           >
             <div className="flex items-center gap-2 text-white/45 text-sm">
               <MapPin size={14} className="text-[var(--ka-cobalt)]" />
@@ -198,8 +204,9 @@ export function Hero() {
           style={{ y: stageY, scale: stageScale }}
           className="relative mx-auto w-full max-w-lg lg:max-w-none perspective-[1200px] pb-10"
           initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           data-cursor="hover"
           data-cursor-label="Drag"
         >

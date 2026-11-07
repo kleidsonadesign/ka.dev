@@ -15,7 +15,7 @@ export function Trajectory() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: false, amount: 0.2, margin: "-60px" }}
           transition={{ duration: 0.65 }}
           className="mb-14 md:mb-20 max-w-3xl"
         >
@@ -38,7 +38,7 @@ export function Trajectory() {
               key={item.id}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.25 }}
               transition={{ duration: 0.65 }}
               className="ka-editorial-panel !p-6 md:!p-10"
             >
@@ -87,7 +87,7 @@ export function Trajectory() {
                 key={item.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.25 }}
                 transition={{ duration: 0.55, delay: i * 0.06 }}
                 className="ka-index-row group"
                 data-cursor="hover"

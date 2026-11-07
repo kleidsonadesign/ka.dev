@@ -41,7 +41,7 @@ export function Contact() {
             <motion.div
               initial={{ opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, amount: 0.2, margin: "-40px" }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="ka-eyebrow mb-5 text-[var(--ka-cobalt)]">{t.contact.eyebrow}</p>
@@ -71,7 +71,7 @@ export function Contact() {
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.25 }}
               transition={{ duration: 0.65, delay: 0.1 }}
               className="border-t border-white/15"
             >

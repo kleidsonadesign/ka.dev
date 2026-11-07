@@ -130,7 +130,7 @@ export function GitHubStats() {
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: false, amount: 0.2, margin: "-60px" }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="ka-eyebrow mb-4 text-[var(--ka-cobalt)]">{t.stats.eyebrow}</p>
@@ -145,7 +145,7 @@ export function GitHubStats() {
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.25 }}
             transition={{ duration: 0.65, delay: 0.08 }}
             className="flex flex-col gap-3 lg:items-end"
           >
@@ -173,7 +173,7 @@ export function GitHubStats() {
         <motion.div
           initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.25 }}
           transition={{ duration: 0.7 }}
           className="ka-editorial-panel"
         >
@@ -192,7 +192,7 @@ export function GitHubStats() {
                     key={m.label}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.25 }}
                     transition={{ delay: i * 0.07 }}
                     className="bg-[#07070a] p-5 md:p-7"
                   >
@@ -229,7 +229,7 @@ export function GitHubStats() {
                             style={{ background: LANG_COLORS[lang.name] || "#2b5bff" }}
                             initial={{ width: 0 }}
                             whileInView={{ width: `${lang.pct}%` }}
-                            viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.25 }}
                             transition={{
                               duration: 0.9,
                               delay: i * 0.05,

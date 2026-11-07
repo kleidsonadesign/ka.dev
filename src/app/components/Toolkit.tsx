@@ -15,7 +15,7 @@ export function Toolkit() {
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: false, amount: 0.2, margin: "-60px" }}
             transition={{ duration: 0.65 }}
             className="lg:sticky lg:top-28 lg:self-start"
           >
@@ -34,7 +34,7 @@ export function Toolkit() {
                 key={group.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.25 }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
                 className="ka-index-row group"
                 data-cursor="hover"

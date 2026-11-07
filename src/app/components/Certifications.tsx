@@ -10,7 +10,7 @@ export function Certifications() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: false, amount: 0.2, margin: "-60px" }}
           transition={{ duration: 0.65 }}
           className="mb-12 md:mb-16 flex flex-wrap items-end justify-between gap-6"
         >
@@ -33,7 +33,7 @@ export function Certifications() {
               key={`${item.institution}-${item.title}`}
               initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.25 }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="ka-index-row group"
               data-cursor="hover"

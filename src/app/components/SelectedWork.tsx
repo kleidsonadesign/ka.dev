@@ -23,12 +23,18 @@ function WorkCaseBlock({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], [70, -70]);
-  const phoneY = useTransform(scrollYProgress, [0, 1], [110, -50]);
-  const textY = useTransform(scrollYProgress, [0, 1], [50, -30]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.92, 1, 0.96]);
-  const panelOpacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0.45, 1, 1, 0.55]);
-  const glow = useTransform(scrollYProgress, [0.15, 0.5, 0.85], [0.15, 0.75, 0.2]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [120, -120]);
+  const phoneY = useTransform(scrollYProgress, [0, 1], [160, -90]);
+  const textY = useTransform(scrollYProgress, [0, 1], [90, -60]);
+  const textX = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [index % 2 === 0 ? -36 : 36, 0, index % 2 === 0 ? 28 : -28],
+  );
+  const imageScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.88, 1, 0.94]);
+  const phoneRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-10, -6, -2]);
+  const panelOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.35, 1, 1, 0.4]);
+  const glow = useTransform(scrollYProgress, [0.1, 0.5, 0.9], [0.1, 0.8, 0.15]);
 
   return (
     <motion.article
@@ -62,7 +68,7 @@ function WorkCaseBlock({
           index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
-        <motion.div style={{ y: textY }}>
+        <motion.div style={{ y: textY, x: textX }}>
           <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="ka-eyebrow text-[var(--ka-cobalt)]">
               {String(index + 1).padStart(2, "0")}
@@ -130,17 +136,16 @@ function WorkCaseBlock({
           </motion.div>
 
           <motion.div
-            style={{ y: phoneY }}
+            style={{ y: phoneY, rotate: phoneRotate }}
             className={`absolute z-[2] -bottom-2 ${
               index % 2 === 0 ? "-left-1 md:-left-5" : "-right-1 md:-right-5"
             }`}
-            whileHover={{ rotate: 0, scale: 1.03 }}
+            whileHover={{ scale: 1.03 }}
             transition={{ type: "spring", stiffness: 200, damping: 18 }}
           >
             <PhoneFrame
               src={project.mobileImage}
               alt={`${project.name} ${mobileLabel}`}
-              className="rotate-[-6deg]"
             />
           </motion.div>
         </div>
@@ -158,7 +163,7 @@ export function SelectedWork() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: false, amount: 0.2, margin: "-60px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="mb-14 md:mb-20 max-w-3xl"
         >
@@ -228,7 +233,7 @@ export function SelectedWork() {
                     onMouseMove={onMove}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.25 }}
                     transition={{ delay: i * 0.08 }}
                     whileHover={{ y: -4 }}
                   >
@@ -244,7 +249,7 @@ export function SelectedWork() {
                   onMouseMove={onMove}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.25 }}
                   transition={{ delay: i * 0.08 }}
                 >
                   {body}
