@@ -51,10 +51,6 @@ export function Hero() {
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const stageY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
-  const moonScrollY = useTransform(scrollYProgress, [0, 1], [0, -140]);
-  const moonScrollX = useTransform(scrollYProgress, [0, 1], [0, 40]);
-  const moonGlow = useTransform(scrollYProgress, [0, 0.5, 1], [0.55, 1, 0.25]);
-
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const smoothX = useSpring(mx, { stiffness: 120, damping: 18 });
@@ -63,14 +59,6 @@ export function Hero() {
   const rotateY = useTransform(smoothX, [-40, 40], [-8, 8]);
   const phoneX = useTransform(smoothX, [-40, 40], [-10, 10]);
   const phoneY = useTransform(smoothY, [-40, 40], [-8, 8]);
-  const moonMouseX = useTransform(smoothX, [-40, 40], [10, -14]);
-  const moonMouseY = useTransform(smoothY, [-40, 40], [8, -10]);
-  const moonX = useTransform([moonScrollX, moonMouseX], ([scroll, mouse]) => {
-    return Number(scroll) + Number(mouse);
-  });
-  const moonY = useTransform([moonScrollY, moonMouseY], ([scroll, mouse]) => {
-    return Number(scroll) + Number(mouse);
-  });
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = stageRef.current?.getBoundingClientRect();
@@ -205,7 +193,8 @@ export function Hero() {
           <motion.div
             aria-hidden
             className="ka-orbit-moon absolute -top-8 -left-6 md:-left-10 z-[3] h-14 w-14 md:h-16 md:w-16"
-            style={{ x: moonX, y: moonY, opacity: moonGlow }}
+            animate={{ opacity: [0.25, 1, 0.25] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
           >
             <img
               src="/images/ka-moon.png"
