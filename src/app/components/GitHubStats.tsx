@@ -15,7 +15,6 @@ type LangStat = {
 
 type ProfileStats = {
   publicRepos: number;
-  privateRepos: number;
   followers: number;
   totalStars: number;
   totalForks: number;
@@ -25,9 +24,6 @@ type ProfileStats = {
   personalCommits: number;
   korvenCommits: number;
   totalCommits: number;
-  includesPrivate: boolean;
-  tokenConfigured?: boolean;
-  tokenUser?: string | null;
 };
 
 const LANG_COLORS: Record<string, string> = {
@@ -50,11 +46,7 @@ async function loadProfileStats(): Promise<ProfileStats> {
   const res = await fetch("/api/github-stats");
   if (!res.ok) throw new Error(`stats ${res.status}`);
   const data = (await res.json()) as ProfileStats;
-  return {
-    ...data,
-    privateRepos: data.privateRepos ?? 0,
-    includesPrivate: Boolean(data.includesPrivate),
-  };
+  return data;
 }
 
 function streakSrc(user: string) {
@@ -98,45 +90,30 @@ export function GitHubStats() {
           repos: "Repos",
           stars: "Stars",
           followers: "Followers",
-          private: "privados",
           loading: "Sincronizando com o GitHub…",
           error: "API indisponível agora — abra os perfis abaixo.",
           personal: "Pessoal",
           korven: "Korven Lab",
           languages: "Linguagens nos repos",
           streakNote: "Autor Korven Lab → streak korvenlab",
-          privateOn: "Inclui repositórios privados",
-          privateOff: "Somente públicos — token sem scope `repo` ou sem privados selecionados",
-          tokenHint: "Token",
         }
       : {
           commits: "Commits",
           repos: "Repos",
           stars: "Stars",
           followers: "Followers",
-          private: "private",
           loading: "Syncing with GitHub…",
           error: "API unavailable — open the profiles below.",
           personal: "Personal",
           korven: "Korven Lab",
           languages: "Languages across repos",
           streakNote: "Korven Lab author → korvenlab streak",
-          privateOn: "Includes private repositories",
-          privateOff: "Public only — token missing `repo` scope or private repos not selected",
-          tokenHint: "Token",
         };
 
   const metrics = stats
     ? [
         { label: labels.commits, value: formatNum(stats.totalCommits) },
-        {
-          label: labels.repos,
-          value: formatNum(stats.publicRepos),
-          hint:
-            stats.privateRepos > 0
-              ? `${stats.privateRepos} ${labels.private}`
-              : undefined,
-        },
+        { label: labels.repos, value: formatNum(stats.publicRepos) },
         { label: labels.stars, value: formatNum(stats.totalStars) },
         { label: labels.followers, value: formatNum(stats.followers) },
       ]
@@ -160,19 +137,9 @@ export function GitHubStats() {
             <h2 className="ka-display text-[clamp(2.4rem,6vw,4.4rem)] text-white mb-5">
               {t.stats.title}
             </h2>
-            <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-md mb-3">
+            <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-md">
               {t.stats.subtitle}
             </p>
-            {stats && (
-              <p className="ka-eyebrow text-[10px] text-white/35">
-                {stats.includesPrivate ? labels.privateOn : labels.privateOff}
-                {stats.tokenConfigured && stats.tokenUser
-                  ? ` · ${labels.tokenHint}: @${stats.tokenUser}`
-                  : stats.tokenConfigured
-                    ? ` · ${labels.tokenHint}: ok`
-                    : ""}
-              </p>
-            )}
           </motion.div>
 
           <motion.div
@@ -233,9 +200,6 @@ export function GitHubStats() {
                     <p className="ka-display text-[clamp(2rem,4vw,3.2rem)] text-white tracking-tight">
                       {m.value}
                     </p>
-                    {"hint" in m && m.hint ? (
-                      <p className="mt-2 text-[11px] text-white/35">{m.hint}</p>
-                    ) : null}
                   </motion.div>
                 ))}
               </div>

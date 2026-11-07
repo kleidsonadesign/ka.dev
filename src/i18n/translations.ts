@@ -295,8 +295,7 @@ export const translations: Record<Language, Translation> = {
     stats: {
       eyebrow: "02 / Signal",
       title: "Código em movimento.",
-      subtitle:
-        "Pulso no GitHub pessoal e na Korven Lab — commits e linguagens (incluindo privados quando o token está configurado).",
+      subtitle: "Pulso no GitHub pessoal e na Korven Lab — commits, linguagens e sequência.",
       profile: "Ver perfil no GitHub",
       commits: "Estatísticas",
       languages: "Top linguagens",
@@ -508,8 +507,7 @@ export const translations: Record<Language, Translation> = {
     stats: {
       eyebrow: "02 / Signal",
       title: "Code in motion.",
-      subtitle:
-        "Pulse on personal GitHub and Korven Lab — commits and languages (including private when the token is set).",
+      subtitle: "Pulse on personal GitHub and Korven Lab — commits, languages, and streak.",
       profile: "View GitHub profile",
       commits: "Stats",
       languages: "Top languages",

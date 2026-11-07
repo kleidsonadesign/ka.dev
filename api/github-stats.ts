@@ -30,9 +30,8 @@ type LangStat = {
 };
 
 export type GithubStatsPayload = {
-  /** Total non-fork repos (public + private when token present). */
+  /** Total non-fork repos counted for the portfolio. */
   publicRepos: number;
-  privateRepos: number;
   followers: number;
   totalStars: number;
   totalForks: number;
@@ -42,11 +41,6 @@ export type GithubStatsPayload = {
   personalCommits: number;
   korvenCommits: number;
   totalCommits: number;
-  includesPrivate: boolean;
-  /** Whether any GITHUB_TOKEN* env is present (never the secret itself). */
-  tokenConfigured: boolean;
-  /** Login of the authenticated token owner, if any. */
-  tokenUser: string | null;
 };
 
 function tokens(): string[] {
@@ -164,7 +158,6 @@ function aggregate(repos: GhRepo[]) {
 export async function buildGithubStats(): Promise<GithubStatsPayload> {
   const authTokens = tokens();
   const primary = authTokens[0];
-  const tokenConfigured = authTokens.length > 0;
 
   const [personalUser, korvenUser, personalPublic, korvenPublic] = await Promise.all([
     gh<{ public_repos: number; followers: number }>(`/users/${PERSONAL}`, primary),
@@ -174,23 +167,15 @@ export async function buildGithubStats(): Promise<GithubStatsPayload> {
   ]);
 
   let authenticated: GhRepo[] = [];
-  let tokenUser: string | null = null;
 
   if (primary) {
-    const [authRepos, me] = await Promise.all([
-      Promise.all(authTokens.map((t) => listAccessibleRepos(t))).then((b) => b.flat()),
-      gh<{ login: string }>("/user", primary).catch(() => null),
-    ]);
-    authenticated = authRepos;
-    tokenUser = me?.login ?? null;
+    authenticated = (
+      await Promise.all(authTokens.map((t) => listAccessibleRepos(t)))
+    ).flat();
   }
 
   // Public from both profiles + anything the token can see (incl. private).
   const repos = [...personalPublic, ...korvenPublic, ...authenticated];
-  const includesPrivate = authenticated.some(
-    (r) => r.private && OWNERS.has(r.owner.login),
-  );
-
   const agg = aggregate(repos);
 
   const [personalCommits, korvenCommits] = await Promise.all([
@@ -200,7 +185,6 @@ export async function buildGithubStats(): Promise<GithubStatsPayload> {
 
   return {
     publicRepos: agg.unique.length,
-    privateRepos: agg.privateRepos,
     followers: (personalUser.followers ?? 0) + (korvenUser.followers ?? 0),
     totalStars: agg.totalStars,
     totalForks: agg.totalForks,
@@ -210,9 +194,6 @@ export async function buildGithubStats(): Promise<GithubStatsPayload> {
     personalCommits,
     korvenCommits,
     totalCommits: personalCommits + korvenCommits,
-    includesPrivate,
-    tokenConfigured,
-    tokenUser,
   };
 }
 
