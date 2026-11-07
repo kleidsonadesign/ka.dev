@@ -258,7 +258,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "01 / Selected Work",
       title: "Produtos reais, no ar.",
       subtitle:
-        "SaaS e marketplaces em produção — com domínio próprio, integrações de pagamento e operação web + mobile. Não são tutoriais.",
+        "SaaS e marketplaces em produção — com domínio próprio, integrações de pagamento e operação web + mobile.",
       visit: "Abrir produto",
       webLabel: "Web app",
       mobileLabel: "Mobile",
@@ -441,7 +441,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "01 / Selected Work",
       title: "Real products, live in production.",
       subtitle:
-        "SaaS and marketplaces online — own domains, payment integrations, and web + mobile ops. Not tutorials.",
+        "SaaS and marketplaces online — own domains, payment integrations, and web + mobile ops.",
       visit: "Open product",
       webLabel: "Web app",
       mobileLabel: "Mobile",
