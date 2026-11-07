@@ -8,7 +8,6 @@ import { Hero } from "./components/Hero";
 import { TechRibbon } from "./components/TechRibbon";
 import { SelectedWork } from "./components/SelectedWork";
 import { GitHubStats } from "./components/GitHubStats";
-import { Toolkit } from "./components/Toolkit";
 import { Trajectory } from "./components/Trajectory";
 import { Certifications } from "./components/Certifications";
 import { Contact } from "./components/Contact";
@@ -27,7 +26,6 @@ export default function App() {
             <TechRibbon />
             <SelectedWork />
             <GitHubStats />
-            <Toolkit />
             <Trajectory />
             <Certifications />
             <Contact />

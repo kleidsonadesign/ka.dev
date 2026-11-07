@@ -50,11 +50,6 @@ export type WorkCase = {
   mobileImage: string;
 };
 
-export type ToolkitGroup = {
-  title: string;
-  items: string[];
-};
-
 export type Translation = {
   intro: {
     skip: string;
@@ -98,12 +93,6 @@ export type Translation = {
     commits: string;
     languages: string;
     streak: string;
-  };
-  toolkit: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-    groups: ToolkitGroup[];
   };
   trajectory: {
     title: string;
@@ -302,40 +291,9 @@ export const translations: Record<Language, Translation> = {
       languages: "Top linguagens",
       streak: "Sequência",
     },
-    toolkit: {
-      eyebrow: "03 / Instruments",
-      title: "Ferramentas que carregam o ship.",
-      subtitle: "Backend, dados, fintech e nuvem — o que uso no dia a dia.",
-      groups: [
-        {
-          title: "Backend & Design",
-          items: ["Node.js", "TypeScript", "Express", "REST", "WebSockets"],
-        },
-        {
-          title: "Database",
-          items: ["PostgreSQL", "RLS", "Supabase", "SQL", "ACID"],
-        },
-        {
-          title: "Distributed Systems",
-          items: ["Outbox", "Idempotency", "HA", "Backoff", "Jobs"],
-        },
-        {
-          title: "FinTech",
-          items: ["Stripe", "Asaas", "Mercado Pago", "PagBank", "Pagar.me"],
-        },
-        {
-          title: "Security",
-          items: ["HMAC", "AES-256", "OAuth 2.0", "JWT", "OWASP"],
-        },
-        {
-          title: "DevOps",
-          items: ["Docker", "AWS", "CI/CD", "Render", "Vercel"],
-        },
-      ],
-    },
     trajectory: {
       title: "De onde venho. Para onde vou.",
-      eyebrow: "04 / Path",
+      eyebrow: "03 / Path",
       educationTitle: "Formação",
       experienceTitle: "Experiência",
       freelanceTitle: "Autônomo & Freelance",
@@ -399,7 +357,7 @@ export const translations: Record<Language, Translation> = {
     },
     certifications: {
       title: "Credenciais que importam.",
-      eyebrow: "05 / Proof",
+      eyebrow: "04 / Proof",
       comingSoon: "Em breve",
       items: [
         {
@@ -419,7 +377,7 @@ export const translations: Record<Language, Translation> = {
       ],
     },
     contact: {
-      eyebrow: "06 / Contato",
+      eyebrow: "05 / Contato",
       title: "Próximo projeto?",
       subtitle: "Aberto a contratos remote (US & EU overlap) e projetos full stack/SaaS.",
       cta: "Falar no WhatsApp",
@@ -515,40 +473,9 @@ export const translations: Record<Language, Translation> = {
       languages: "Top languages",
       streak: "Streak",
     },
-    toolkit: {
-      eyebrow: "03 / Instruments",
-      title: "Tools that carry the ship.",
-      subtitle: "Backend, data, fintech, and cloud — what I use every day.",
-      groups: [
-        {
-          title: "Backend & Design",
-          items: ["Node.js", "TypeScript", "Express", "REST", "WebSockets"],
-        },
-        {
-          title: "Database",
-          items: ["PostgreSQL", "RLS", "Supabase", "SQL", "ACID"],
-        },
-        {
-          title: "Distributed Systems",
-          items: ["Outbox", "Idempotency", "HA", "Backoff", "Jobs"],
-        },
-        {
-          title: "FinTech",
-          items: ["Stripe", "Asaas", "Mercado Pago", "PagBank", "Pagar.me"],
-        },
-        {
-          title: "Security",
-          items: ["HMAC", "AES-256", "OAuth 2.0", "JWT", "OWASP"],
-        },
-        {
-          title: "DevOps",
-          items: ["Docker", "AWS", "CI/CD", "Render", "Vercel"],
-        },
-      ],
-    },
     trajectory: {
       title: "Where I’ve been. Where I’m going.",
-      eyebrow: "04 / Path",
+      eyebrow: "03 / Path",
       educationTitle: "Education",
       experienceTitle: "Experience",
       freelanceTitle: "Freelance & Independent",
@@ -612,7 +539,7 @@ export const translations: Record<Language, Translation> = {
     },
     certifications: {
       title: "Credentials that matter.",
-      eyebrow: "05 / Proof",
+      eyebrow: "04 / Proof",
       comingSoon: "Coming soon",
       items: [
         {
@@ -632,7 +559,7 @@ export const translations: Record<Language, Translation> = {
       ],
     },
     contact: {
-      eyebrow: "06 / Contact",
+      eyebrow: "05 / Contact",
       title: "Next build?",
       subtitle: "Open to remote contracts (US & EU overlap) and full stack/SaaS work.",
       cta: "Chat on WhatsApp",

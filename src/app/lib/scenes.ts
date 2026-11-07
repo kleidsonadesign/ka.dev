@@ -10,7 +10,6 @@ export type SceneId =
   | "gh-distributed"
   | "gh-fintech"
   | "gh-ops"
-  | "toolkit"
   | "trajetoria"
   | "certificacoes"
   | "contato";
@@ -112,14 +111,6 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     glowAlt: "rgba(255, 255, 255, 0.07)",
     name: "OPS",
     ink: "#fff6eb",
-  },
-  toolkit: {
-    id: "toolkit",
-    bg: "#05070c",
-    glow: "rgba(43, 91, 255, 0.3)",
-    glowAlt: "rgba(255, 255, 255, 0.08)",
-    name: "STACK",
-    ink: "#f7f7f8",
   },
   trajetoria: {
     id: "trajetoria",
