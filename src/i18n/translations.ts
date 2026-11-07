@@ -245,8 +245,8 @@ export const translations: Record<Language, Translation> = {
     hero: {
       brand: "Kleidson Almeida Santos",
       eyebrow: "Full Stack · Distributed Systems · SaaS",
-      headline: "Eu projeto e entrego",
-      headlineAccent: "plataformas SaaS escaláveis",
+      headline: "Projetando plataformas B2B e B2C",
+      headlineAccent: "escaláveis",
       summary:
         "5+ anos em full stack, sistemas distribuídos e integrações FinTech. Node.js/TypeScript, PostgreSQL e APIs resilientes — produtos B2B e infraestrutura cloud fault-tolerant. Inglês fluente. Aberto a remote US/EU.",
       cta: "Ver trabalho selecionado",
@@ -285,7 +285,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "02 / Signal",
       title: "Código em movimento.",
       subtitle:
-        "Pulso no GitHub e um passeio pinado pelas tecnologias que mais carrego no dia a dia.",
+        "Atividade no GitHub e as tecnologias que sustentam os produtos no dia a dia.",
       profile: "Ver perfil no GitHub",
       commits: "Estatísticas",
       languages: "Top linguagens",
@@ -427,8 +427,8 @@ export const translations: Record<Language, Translation> = {
     hero: {
       brand: "Kleidson Almeida Santos",
       eyebrow: "Full Stack · Distributed Systems · SaaS",
-      headline: "I design and ship",
-      headlineAccent: "scalable SaaS platforms",
+      headline: "Designing B2B and B2C",
+      headlineAccent: "scalable platforms",
       summary:
         "5+ years in full stack engineering, distributed systems, and FinTech integrations. Node.js/TypeScript, PostgreSQL, and resilient APIs — B2B products and fault-tolerant cloud infrastructure. Fluent English. Open to remote US/EU overlap.",
       cta: "View selected work",
@@ -467,7 +467,7 @@ export const translations: Record<Language, Translation> = {
       eyebrow: "02 / Signal",
       title: "Code in motion.",
       subtitle:
-        "GitHub pulse plus a pinned walk through the technologies I ship with every day.",
+        "GitHub activity and the technologies that sustain the products day to day.",
       profile: "View GitHub profile",
       commits: "Stats",
       languages: "Top languages",
