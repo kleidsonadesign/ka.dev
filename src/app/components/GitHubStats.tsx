@@ -26,6 +26,8 @@ type ProfileStats = {
   korvenCommits: number;
   totalCommits: number;
   includesPrivate: boolean;
+  tokenConfigured?: boolean;
+  tokenUser?: string | null;
 };
 
 const LANG_COLORS: Record<string, string> = {
@@ -104,7 +106,8 @@ export function GitHubStats() {
           languages: "Linguagens nos repos",
           streakNote: "Autor Korven Lab → streak korvenlab",
           privateOn: "Inclui repositórios privados",
-          privateOff: "Somente públicos (configure GITHUB_TOKEN)",
+          privateOff: "Somente públicos — token sem scope `repo` ou sem privados selecionados",
+          tokenHint: "Token",
         }
       : {
           commits: "Commits",
@@ -119,7 +122,8 @@ export function GitHubStats() {
           languages: "Languages across repos",
           streakNote: "Korven Lab author → korvenlab streak",
           privateOn: "Includes private repositories",
-          privateOff: "Public only (set GITHUB_TOKEN)",
+          privateOff: "Public only — token missing `repo` scope or private repos not selected",
+          tokenHint: "Token",
         };
 
   const metrics = stats
@@ -162,6 +166,11 @@ export function GitHubStats() {
             {stats && (
               <p className="ka-eyebrow text-[10px] text-white/35">
                 {stats.includesPrivate ? labels.privateOn : labels.privateOff}
+                {stats.tokenConfigured && stats.tokenUser
+                  ? ` · ${labels.tokenHint}: @${stats.tokenUser}`
+                  : stats.tokenConfigured
+                    ? ` · ${labels.tokenHint}: ok`
+                    : ""}
               </p>
             )}
           </motion.div>

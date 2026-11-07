@@ -1,7 +1,9 @@
 /**
  * Aggregates GitHub stats for kleidsonadesign + korvenlab.
- * With GITHUB_TOKEN (repo scope / fine-grained Contents:Read on private repos),
- * includes private repositories the token can access.
+ *
+ * Always merges public repos from both accounts.
+ * With GITHUB_TOKEN / GITHUB_TOKEN_KORVEN (classic `repo` scope, or fine-grained
+ * Contents: Read on private repos), also merges private repos the token can see.
  * Never returns private repo names — only aggregates.
  */
 
@@ -41,6 +43,10 @@ export type GithubStatsPayload = {
   korvenCommits: number;
   totalCommits: number;
   includesPrivate: boolean;
+  /** Whether any GITHUB_TOKEN* env is present (never the secret itself). */
+  tokenConfigured: boolean;
+  /** Login of the authenticated token owner, if any. */
+  tokenUser: string | null;
 };
 
 function tokens(): string[] {
@@ -83,10 +89,18 @@ async function listAccessibleRepos(token: string): Promise<GhRepo[]> {
   return all;
 }
 
-async function listPublicRepos(owner: string): Promise<GhRepo[]> {
-  return gh<GhRepo[]>(
-    `/users/${owner}/repos?per_page=100&sort=updated&type=owner`,
-  );
+async function listPublicRepos(owner: string, token?: string): Promise<GhRepo[]> {
+  const all: GhRepo[] = [];
+  for (let page = 1; page <= 3; page++) {
+    const batch = await gh<GhRepo[]>(
+      `/users/${owner}/repos?per_page=100&page=${page}&sort=updated&type=owner`,
+      token,
+    );
+    if (!batch.length) break;
+    all.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return all;
 }
 
 async function countAuthorCommits(author: string, token?: string): Promise<number> {
@@ -144,33 +158,38 @@ function aggregate(repos: GhRepo[]) {
     privateRepos,
     personalRepos,
     korvenRepos,
-    publicRepos: unique.length - privateRepos,
   };
 }
 
 export async function buildGithubStats(): Promise<GithubStatsPayload> {
   const authTokens = tokens();
   const primary = authTokens[0];
+  const tokenConfigured = authTokens.length > 0;
 
-  const [personalUser, korvenUser] = await Promise.all([
+  const [personalUser, korvenUser, personalPublic, korvenPublic] = await Promise.all([
     gh<{ public_repos: number; followers: number }>(`/users/${PERSONAL}`, primary),
     gh<{ public_repos: number; followers: number }>(`/users/${KORVEN}`, primary),
+    listPublicRepos(PERSONAL, primary),
+    listPublicRepos(KORVEN, primary),
   ]);
 
-  let repos: GhRepo[] = [];
-  let includesPrivate = false;
+  let authenticated: GhRepo[] = [];
+  let tokenUser: string | null = null;
 
-  if (authTokens.length) {
-    const batches = await Promise.all(authTokens.map((t) => listAccessibleRepos(t)));
-    repos = batches.flat();
-    includesPrivate = repos.some((r) => r.private && OWNERS.has(r.owner.login));
-  } else {
-    const [personalRepos, korvenRepos] = await Promise.all([
-      listPublicRepos(PERSONAL),
-      listPublicRepos(KORVEN),
+  if (primary) {
+    const [authRepos, me] = await Promise.all([
+      Promise.all(authTokens.map((t) => listAccessibleRepos(t))).then((b) => b.flat()),
+      gh<{ login: string }>("/user", primary).catch(() => null),
     ]);
-    repos = [...personalRepos, ...korvenRepos];
+    authenticated = authRepos;
+    tokenUser = me?.login ?? null;
   }
+
+  // Public from both profiles + anything the token can see (incl. private).
+  const repos = [...personalPublic, ...korvenPublic, ...authenticated];
+  const includesPrivate = authenticated.some(
+    (r) => r.private && OWNERS.has(r.owner.login),
+  );
 
   const agg = aggregate(repos);
 
@@ -180,8 +199,7 @@ export async function buildGithubStats(): Promise<GithubStatsPayload> {
   ]);
 
   return {
-    // Field kept as publicRepos for client compatibility = total counted repos.
-    publicRepos: agg.unique.length || (personalUser.public_repos ?? 0) + (korvenUser.public_repos ?? 0),
+    publicRepos: agg.unique.length,
     privateRepos: agg.privateRepos,
     followers: (personalUser.followers ?? 0) + (korvenUser.followers ?? 0),
     totalStars: agg.totalStars,
@@ -193,6 +211,8 @@ export async function buildGithubStats(): Promise<GithubStatsPayload> {
     korvenCommits,
     totalCommits: personalCommits + korvenCommits,
     includesPrivate,
+    tokenConfigured,
+    tokenUser,
   };
 }
 
@@ -201,7 +221,7 @@ export async function GET() {
     const stats = await buildGithubStats();
     return Response.json(stats, {
       headers: {
-        "Cache-Control": "s-maxage=600, stale-while-revalidate=3600",
+        "Cache-Control": "s-maxage=60, stale-while-revalidate=300",
       },
     });
   } catch (err) {
