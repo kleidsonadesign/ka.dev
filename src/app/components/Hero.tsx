@@ -1,184 +1,103 @@
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { ArrowDownRight, MapPin } from "lucide-react";
-import { useRef } from "react";
+import { motion } from "motion/react";
+import { ArrowDown } from "lucide-react";
 import { useTranslation } from "../../i18n/LanguageContext";
-import { BrowserFrame, PhoneFrame } from "./DeviceFrame";
-
-function splitWords(text: string) {
-  return text.split(" ");
-}
 
 export function Hero() {
   const { t } = useTranslation();
-  const stageRef = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const smoothX = useSpring(mx, { stiffness: 120, damping: 18 });
-  const smoothY = useSpring(my, { stiffness: 120, damping: 18 });
-  const rotateX = useTransform(smoothY, [-40, 40], [6, -6]);
-  const rotateY = useTransform(smoothX, [-40, 40], [-8, 8]);
-  const phoneX = useTransform(smoothX, [-40, 40], [-10, 10]);
-  const phoneY = useTransform(smoothY, [-40, 40], [-8, 8]);
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = stageRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 80;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 80;
-    mx.set(x);
-    my.set(y);
-  };
-
-  const headlineWords = splitWords(`${t.hero.headline} ${t.hero.headlineAccent}`);
 
   return (
     <section
       id="topo"
-      className="relative z-10 min-h-[100svh] flex items-center pt-24 pb-12 px-5 md:px-8 overflow-hidden"
+      className="relative z-10 min-h-[100svh] flex flex-col justify-end overflow-hidden"
     >
-      <div className="ka-container w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center relative">
-        <div>
-          <motion.p
-            className="ka-eyebrow mb-6 inline-flex items-center gap-2 text-[var(--ka-cobalt)]"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.2 }}
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-[var(--ka-cobalt)] animate-ping opacity-60" />
-              <span className="relative h-2 w-2 rounded-full bg-[var(--ka-cobalt)]" />
-            </span>
-            {t.hero.eyebrow}
-          </motion.p>
+      {/* Full-bleed visual plane */}
+      <div className="absolute inset-0 -z-10">
+        <img
+          src="/images/projects/wagoobot/web.png?v=prints"
+          alt=""
+          className="h-full w-full object-cover object-top opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/75 to-[#030303]/35" />
+        <div
+          className="absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse at 30% 20%, rgba(43,91,255,0.35), transparent 55%)",
+          }}
+        />
+        <div className="ka-hero-scanlines absolute inset-0 pointer-events-none" />
+      </div>
 
-          <motion.h1
-            className="ka-display text-[clamp(3rem,9vw,6.6rem)] text-white mb-5"
-            initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-            style={{ textShadow: "0 0 40px rgba(255,255,255,0.08)" }}
-          >
-            {t.hero.brand}
-          </motion.h1>
+      <div className="ka-container w-full px-5 md:px-8 pt-28 pb-10 md:pb-14 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-6 md:mb-8"
+        >
+          <span className="ka-cobalt-banner">{t.hero.eyebrow}</span>
+        </motion.div>
 
-          <p className="ka-display text-[clamp(1.55rem,3.8vw,2.7rem)] text-white/90 mb-7 max-w-2xl flex flex-wrap gap-x-2 gap-y-1">
-            {headlineWords.map((word, i) => {
-              const isAccent = i >= splitWords(t.hero.headline).length;
-              return (
-                <motion.span
-                  key={`${word}-${i}`}
-                  className={isAccent ? "italic text-white/50" : ""}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.4 + i * 0.05,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  {word}
-                </motion.span>
-              );
-            })}
+        <motion.h1
+          className="ka-brand-mega text-white"
+          initial={{ opacity: 0, y: 48, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+        >
+          ALMEIDA
+        </motion.h1>
+
+        <motion.p
+          className="ka-display text-[clamp(1.4rem,3.5vw,2.4rem)] text-white/55 italic mt-2 mb-8 max-w-3xl"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+        >
+          {t.hero.headline}{" "}
+          <span className="text-white/90 not-italic">{t.hero.headlineAccent}</span>
+        </motion.p>
+
+        <motion.div
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <p className="max-w-xl text-sm md:text-base text-white/55 leading-relaxed">
+            {t.hero.summary}
           </p>
 
-          <motion.p
-            className="max-w-xl text-base md:text-lg text-white/60 leading-relaxed mb-10"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.75 }}
-          >
-            {t.hero.summary}
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.85 }}
-          >
+          <div className="flex flex-wrap items-center gap-4">
             <a
               href="#trabalho"
-              className="group inline-flex items-center gap-2 rounded-full bg-white text-black px-6 py-3.5 text-sm font-semibold hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] transition-shadow"
+              className="group inline-flex items-center gap-3 text-sm font-semibold text-white"
+              data-cursor="hover"
             >
-              {t.hero.cta}
-              <ArrowDownRight
-                size={16}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"
-              />
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 group-hover:border-[var(--ka-cobalt)] group-hover:bg-[var(--ka-cobalt)] transition-colors">
+                <ArrowDown size={18} />
+              </span>
+              <span className="border-b border-white/20 group-hover:border-white pb-0.5 transition-colors">
+                {t.hero.cta}
+              </span>
             </a>
             <a
               href="/resume/kleidson-almeida-santos-resume.pdf"
               download="Kleidson Almeida Santos - Resume.pdf"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-white/80 hover:border-white/50 hover:text-white hover:bg-white/[0.04] transition"
+              className="ka-eyebrow text-[10px] text-white/40 hover:text-white transition-colors"
             >
-              {t.hero.secondaryCta}
+              {t.hero.secondaryCta} ↗
             </a>
-          </motion.div>
-
-          <motion.div
-            className="mt-12 flex flex-wrap items-center gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-          >
-            <div className="flex items-center gap-2 text-white/45 text-sm">
-              <MapPin size={14} className="text-[var(--ka-cobalt)]" />
-              <span>
-                {t.hero.location} · {t.hero.timezone}
-              </span>
-            </div>
-            <div className="hidden sm:flex items-center gap-3 text-white/35">
-              <div className="ka-scroll-cue" />
-              <span className="ka-eyebrow text-[10px]">Scroll</span>
-            </div>
-          </motion.div>
-        </div>
-
-        <motion.div
-          ref={stageRef}
-          onMouseMove={onMove}
-          onMouseLeave={() => {
-            mx.set(0);
-            my.set(0);
-          }}
-          className="relative mx-auto w-full max-w-lg lg:max-w-none perspective-[1200px] pb-10"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.div
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="relative"
-          >
-            <BrowserFrame
-              src="/images/projects/wagoobot/web.png?v=prints"
-              alt="Wagoo web"
-            />
-
-            <motion.div
-              style={{ x: phoneX, y: phoneY }}
-              className="absolute -bottom-6 right-2 md:right-6 z-10 drop-shadow-[0_0_40px_rgba(43,91,255,0.35)]"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <PhoneFrame
-                src="/images/projects/shopwagoo/mobile.png?v=prints"
-                alt="Shopwag mobile"
-                className="rotate-[-7deg]"
-              />
-            </motion.div>
-          </motion.div>
-
-          <div
-            className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-80"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(43,91,255,0.35), transparent 62%)",
-              filter: "blur(10px)",
-            }}
-          />
+          </div>
         </motion.div>
+
+        <motion.p
+          className="mt-10 ka-eyebrow text-[10px] text-white/35"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+        >
+          {t.hero.location} · {t.hero.timezone}
+        </motion.p>
       </div>
     </section>
   );

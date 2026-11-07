@@ -267,9 +267,8 @@ export const translations: Record<Language, Translation> = {
     },
     work: {
       eyebrow: "01 / Selected Work",
-      title: "Produtos que mostram domínio web e mobile.",
-      subtitle:
-        "Cases reais com interfaces desktop e experiência mobile — Papufy, Wagoo e Shopwag.",
+      title: "Ideias, feitas de verdade.",
+      subtitle: "Papufy, Wagoo e Shopwag — web e mobile no mesmo ritmo.",
       visit: "Abrir projeto",
       webLabel: "Web app",
       mobileLabel: "Mobile",
@@ -480,9 +479,8 @@ export const translations: Record<Language, Translation> = {
     },
     work: {
       eyebrow: "01 / Selected Work",
-      title: "Products that prove web and mobile craft.",
-      subtitle:
-        "Real cases with desktop interfaces and mobile experience — Papufy, Wagoo, and Shopwag.",
+      title: "Ideas, made real.",
+      subtitle: "Papufy, Wagoo, and Shopwag — web and mobile in the same rhythm.",
       visit: "Open project",
       webLabel: "Web app",
       mobileLabel: "Mobile",
