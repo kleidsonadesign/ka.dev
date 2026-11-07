@@ -11,6 +11,11 @@ export type SceneId =
   | "gh-fintech"
   | "gh-ops"
   | "trajetoria"
+  | "path-edu"
+  | "path-korven"
+  | "path-inss"
+  | "path-appen"
+  | "path-freelance"
   | "certificacoes"
   | "contato";
 
@@ -119,6 +124,46 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     glowAlt: "rgba(255, 255, 255, 0.07)",
     name: "PATH",
     ink: "#f7f7f8",
+  },
+  "path-edu": {
+    id: "path-edu",
+    bg: "#0a0c14",
+    glow: "rgba(43, 91, 255, 0.32)",
+    glowAlt: "rgba(255, 255, 255, 0.08)",
+    name: "EDU",
+    ink: "#f0f3ff",
+  },
+  "path-korven": {
+    id: "path-korven",
+    bg: "#070b16",
+    glow: "rgba(43, 91, 255, 0.45)",
+    glowAlt: "rgba(255, 255, 255, 0.08)",
+    name: "KORVEN",
+    ink: "#eef2ff",
+  },
+  "path-inss": {
+    id: "path-inss",
+    bg: "#0a1010",
+    glow: "rgba(46, 160, 120, 0.28)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "INSS",
+    ink: "#eaf6f1",
+  },
+  "path-appen": {
+    id: "path-appen",
+    bg: "#0a0e14",
+    glow: "rgba(90, 140, 180, 0.28)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "APPEN",
+    ink: "#eef3f8",
+  },
+  "path-freelance": {
+    id: "path-freelance",
+    bg: "#100e08",
+    glow: "rgba(232, 168, 74, 0.24)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "SOLO",
+    ink: "#fff6eb",
   },
   certificacoes: {
     id: "certificacoes",
