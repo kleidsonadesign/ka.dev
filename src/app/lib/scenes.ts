@@ -5,6 +5,11 @@ export type SceneId =
   | "wagoobot"
   | "shopwagoo"
   | "github"
+  | "gh-typescript"
+  | "gh-postgres"
+  | "gh-distributed"
+  | "gh-fintech"
+  | "gh-ops"
   | "toolkit"
   | "trajetoria"
   | "certificacoes"
@@ -65,8 +70,48 @@ export const SCENES: Record<SceneId, SceneTheme> = {
     bg: "#08080e",
     glow: "rgba(255, 255, 255, 0.12)",
     glowAlt: "rgba(43, 91, 255, 0.22)",
-    name: "GITHUB",
+    name: "SIGNAL",
     ink: "#f7f7f8",
+  },
+  "gh-typescript": {
+    id: "gh-typescript",
+    bg: "#071018",
+    glow: "rgba(49, 120, 198, 0.42)",
+    glowAlt: "rgba(255, 255, 255, 0.08)",
+    name: "TS",
+    ink: "#eaf3ff",
+  },
+  "gh-postgres": {
+    id: "gh-postgres",
+    bg: "#061018",
+    glow: "rgba(51, 103, 145, 0.48)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "POSTGRES",
+    ink: "#e8f2fa",
+  },
+  "gh-distributed": {
+    id: "gh-distributed",
+    bg: "#070b16",
+    glow: "rgba(43, 91, 255, 0.4)",
+    glowAlt: "rgba(255, 255, 255, 0.08)",
+    name: "SYSTEMS",
+    ink: "#eef2ff",
+  },
+  "gh-fintech": {
+    id: "gh-fintech",
+    bg: "#06120e",
+    glow: "rgba(46, 180, 110, 0.3)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "FINTECH",
+    ink: "#eaf8f0",
+  },
+  "gh-ops": {
+    id: "gh-ops",
+    bg: "#100d08",
+    glow: "rgba(232, 168, 74, 0.26)",
+    glowAlt: "rgba(255, 255, 255, 0.07)",
+    name: "OPS",
+    ink: "#fff6eb",
   },
   toolkit: {
     id: "toolkit",

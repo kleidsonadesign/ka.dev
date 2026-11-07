@@ -1,36 +1,11 @@
-import { motion, useMotionValue } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "../../i18n/LanguageContext";
-import { useScene } from "../lib/SceneContext";
+import { useDesktopJourney, usePinnedJourney } from "../hooks/usePinnedJourney";
 import { type SceneId } from "../lib/scenes";
 import type { WorkCase } from "../../i18n/translations";
 import { BrowserFrame, PhoneFrame } from "./DeviceFrame";
-
-function useDesktopJourney(minWidth = 1024) {
-  const [enabled, setEnabled] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return (
-      window.matchMedia(`(min-width: ${minWidth}px)`).matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
-  });
-
-  useEffect(() => {
-    const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setEnabled(mq.matches && !reduced.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    reduced.addEventListener("change", sync);
-    return () => {
-      mq.removeEventListener("change", sync);
-      reduced.removeEventListener("change", sync);
-    };
-  }, [minWidth]);
-
-  return enabled;
-}
 
 function WorkCaseSlide({
   project,
@@ -230,94 +205,19 @@ function WorkMore({
 
 export function SelectedWork() {
   const { t } = useTranslation();
-  const { lockScene, unlockScene } = useScene();
   const desktopJourney = useDesktopJourney();
   const cases = t.work.cases;
-  const count = Math.max(cases.length, 1);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const progress = useMotionValue(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [viewportWidth, setViewportWidth] = useState(0);
+  const sceneForIndex = useCallback(
+    (index: number) => cases[index]?.id as SceneId | undefined,
+    [cases],
+  );
 
-  useLayoutEffect(() => {
-    const measure = () => setViewportWidth(window.innerWidth);
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  useEffect(() => {
-    if (!desktopJourney) {
-      x.set(0);
-      progress.set(0);
-      setActiveIndex(0);
-      unlockScene();
-      return;
-    }
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    let frame = 0;
-    let pinned = false;
-
-    const update = () => {
-      frame = 0;
-      const rect = container.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = Math.max(container.offsetHeight - vh, 1);
-      const rawPassed = -rect.top;
-      const width = window.innerWidth;
-
-      // Only pin-drive scenes while the sticky range is truly active.
-      // Outside it, release so hero / next sections own the background again.
-      if (rawPassed < 0 || rawPassed > total) {
-        x.set(rawPassed < 0 ? 0 : -(count - 1) * width);
-        progress.set(rawPassed < 0 ? 0 : 1);
-        setActiveIndex(rawPassed < 0 ? 0 : count - 1);
-        if (pinned) {
-          pinned = false;
-          unlockScene();
-        }
-        return;
-      }
-
-      const p = rawPassed / total;
-      const translate = -p * (count - 1) * width;
-      const idx = Math.min(
-        count - 1,
-        Math.max(0, Math.round(p * (count - 1))),
-      );
-
-      progress.set(p);
-      x.set(translate);
-      setActiveIndex((current) => (current === idx ? current : idx));
-      pinned = true;
-
-      const id = cases[idx]?.id;
-      if (id) lockScene(id as SceneId);
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      unlockScene();
-    };
-  }, [desktopJourney, cases, count, lockScene, unlockScene, x, progress]);
-
-  const slideWidth = viewportWidth || 1200;
+  const { containerRef, x, activeIndex, slideWidth } = usePinnedJourney({
+    enabled: desktopJourney,
+    count: cases.length,
+    sceneForIndex,
+  });
 
   return (
     <section id="trabalho" className="relative">
