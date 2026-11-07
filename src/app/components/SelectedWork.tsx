@@ -1,11 +1,6 @@
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { useScene } from "../lib/SceneContext";
 import { type SceneId } from "../lib/scenes";
@@ -13,7 +8,13 @@ import type { WorkCase } from "../../i18n/translations";
 import { BrowserFrame, PhoneFrame } from "./DeviceFrame";
 
 function useDesktopJourney(minWidth = 1024) {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      window.matchMedia(`(min-width: ${minWidth}px)`).matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  });
 
   useEffect(() => {
     const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
@@ -232,37 +233,76 @@ export function SelectedWork() {
   const { lockScene, unlockScene } = useScene();
   const desktopJourney = useDesktopJourney();
   const cases = t.work.cases;
+  const count = Math.max(cases.length, 1);
+
   const containerRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const progress = useMotionValue(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0vw", `-${Math.max(cases.length - 1, 0) * 100}vw`],
-  );
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    if (!desktopJourney || cases.length === 0) return;
-    const idx = Math.min(
-      cases.length - 1,
-      Math.max(0, Math.round(value * (cases.length - 1))),
-    );
-    setActiveIndex(idx);
-    const id = cases[idx]?.id;
-    if (id) lockScene(id as SceneId);
-  });
+  useLayoutEffect(() => {
+    const measure = () => setViewportWidth(window.innerWidth);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   useEffect(() => {
     if (!desktopJourney) {
+      x.set(0);
+      progress.set(0);
       unlockScene();
       return;
     }
 
+    const container = containerRef.current;
+    if (!container) return;
+
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const rect = container.getBoundingClientRect();
+      const total = Math.max(container.offsetHeight - window.innerHeight, 1);
+      const passed = Math.min(Math.max(-rect.top, 0), total);
+      const p = passed / total;
+      const width = window.innerWidth;
+      const translate = -p * (count - 1) * width;
+
+      progress.set(p);
+      x.set(translate);
+
+      const idx = Math.min(count - 1, Math.max(0, Math.round(p * (count - 1))));
+      setActiveIndex(idx);
+
+      const id = cases[idx]?.id;
+      if (id) lockScene(id as SceneId);
+
+      if (p <= 0 || p >= 1) {
+        // keep locked while visually inside the pin range
+      }
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      unlockScene();
+    };
+  }, [desktopJourney, cases, count, lockScene, unlockScene, x, progress]);
+
+  useEffect(() => {
+    if (!desktopJourney) return;
     const node = containerRef.current;
     if (!node) return;
 
@@ -270,15 +310,13 @@ export function SelectedWork() {
       ([entry]) => {
         if (!entry.isIntersecting) unlockScene();
       },
-      { threshold: 0.05 },
+      { threshold: 0.02 },
     );
-
     observer.observe(node);
-    return () => {
-      observer.disconnect();
-      unlockScene();
-    };
+    return () => observer.disconnect();
   }, [desktopJourney, unlockScene]);
+
+  const slideWidth = viewportWidth || 1200;
 
   return (
     <section id="trabalho" className="relative">
@@ -306,18 +344,21 @@ export function SelectedWork() {
           ref={containerRef}
           className="ka-work-journey relative"
           data-scene-rail=""
-          style={{ height: `${Math.max(cases.length, 1) * 100}vh` }}
+          style={{ height: `${count * 100}vh` }}
         >
           <div className="ka-work-pin sticky top-0 h-[100svh] overflow-hidden">
             <motion.div
               className="ka-work-track flex h-full will-change-transform"
-              style={{ x, width: `${cases.length * 100}vw` }}
+              style={{
+                x,
+                width: slideWidth * count,
+              }}
             >
               {cases.map((project, index) => (
                 <div
                   key={project.id}
                   className="ka-work-slide relative h-full shrink-0"
-                  style={{ width: "100vw" }}
+                  style={{ width: slideWidth, minWidth: slideWidth }}
                 >
                   <div className="ka-container h-full flex items-center py-24">
                     <div className="w-full max-h-[calc(100svh-8rem)] overflow-hidden">
