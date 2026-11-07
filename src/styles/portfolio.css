@@ -156,6 +156,78 @@ button {
   border-color: rgba(43, 91, 255, 0.7);
 }
 
+.ka-cursor.is-label,
+.ka-cursor-ring.is-label {
+  opacity: 0;
+}
+
+.ka-cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 72px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--ka-cobalt);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 0.25s var(--ka-ease),
+    scale 0.35s var(--ka-ease);
+}
+
+.ka-cursor-label.is-visible {
+  opacity: 1;
+  scale: 1;
+}
+
+.ka-cobalt-banner {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #030303;
+  background: var(--ka-cobalt);
+  padding: 0.55rem 0.95rem;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.ka-media-reveal {
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.ka-orbit-moon {
+  pointer-events: none;
+  filter: drop-shadow(0 0 18px rgba(43, 91, 255, 0.45));
+}
+
+.ka-marquee-reverse .ka-marquee-track {
+  animation-name: ka-marquee-reverse;
+  animation-duration: 36s;
+}
+
+@keyframes ka-marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 .ka-section {
   position: relative;
   z-index: 10;
@@ -540,7 +612,8 @@ button {
   }
 
   .ka-cursor,
-  .ka-cursor-ring {
+  .ka-cursor-ring,
+  .ka-cursor-label {
     display: none !important;
   }
 }
@@ -556,7 +629,8 @@ button {
   .ka-neon-scan,
   .ka-grid,
   .ka-marquee-track,
-  .ka-scroll-cue::after {
+  .ka-scroll-cue::after,
+  .ka-orbit-moon {
     animation: none !important;
   }
 

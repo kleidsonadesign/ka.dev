@@ -8,6 +8,30 @@ function splitWords(text: string) {
   return text.split(" ");
 }
 
+function BrandLetters({ text }: { text: string }) {
+  const chars = text.split("");
+  return (
+    <span className="inline-flex flex-wrap" aria-label={text}>
+      {chars.map((char, i) => (
+        <motion.span
+          key={`${char}-${i}`}
+          className="inline-block"
+          initial={{ opacity: 0, y: "0.55em", rotateX: -40 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{
+            duration: 0.55,
+            delay: 0.28 + i * 0.028,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{ transformOrigin: "50% 100%" }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
 export function Hero() {
   const { t } = useTranslation();
   const stageRef = useRef<HTMLDivElement>(null);
@@ -38,28 +62,27 @@ export function Hero() {
     >
       <div className="ka-container w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center relative">
         <div>
-          <motion.p
-            className="ka-eyebrow mb-6 inline-flex items-center gap-2 text-[var(--ka-cobalt)]"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.2 }}
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.55, delay: 0.15 }}
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-[var(--ka-cobalt)] animate-ping opacity-60" />
-              <span className="relative h-2 w-2 rounded-full bg-[var(--ka-cobalt)]" />
+            <span className="ka-cobalt-banner inline-flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inset-0 rounded-full bg-black/40 animate-ping opacity-70" />
+                <span className="relative h-1.5 w-1.5 rounded-full bg-black/70" />
+              </span>
+              {t.hero.eyebrow}
             </span>
-            {t.hero.eyebrow}
-          </motion.p>
+          </motion.div>
 
-          <motion.h1
-            className="ka-display text-[clamp(3rem,9vw,6.6rem)] text-white mb-5"
-            initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+          <h1
+            className="ka-display text-[clamp(3rem,9vw,6.6rem)] text-white mb-5 perspective-[800px]"
             style={{ textShadow: "0 0 40px rgba(255,255,255,0.08)" }}
           >
-            {t.hero.brand}
-          </motion.h1>
+            <BrandLetters text={t.hero.brand} />
+          </h1>
 
           <p className="ka-display text-[clamp(1.55rem,3.8vw,2.7rem)] text-white/90 mb-7 max-w-2xl flex flex-wrap gap-x-2 gap-y-1">
             {headlineWords.map((word, i) => {
@@ -99,6 +122,8 @@ export function Hero() {
           >
             <a
               href="#trabalho"
+              data-cursor="hover"
+              data-cursor-label="Scroll"
               className="group inline-flex items-center gap-2 rounded-full bg-white text-black px-6 py-3.5 text-sm font-semibold hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] transition-shadow"
             >
               {t.hero.cta}
@@ -146,15 +171,32 @@ export function Hero() {
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          data-cursor="hover"
+          data-cursor-label="Drag"
         >
+          <motion.div
+            aria-hidden
+            className="ka-orbit-moon absolute -top-8 -left-6 md:-left-10 z-[3] h-14 w-14 md:h-16 md:w-16"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+          >
+            <img
+              src="/images/ka-moon.png"
+              alt=""
+              className="h-full w-full object-contain drop-shadow-[0_0_20px_rgba(43,91,255,0.55)]"
+            />
+          </motion.div>
+
           <motion.div
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="relative"
           >
-            <BrowserFrame
-              src="/images/projects/wagoobot/web.png?v=prints"
-              alt="Wagoo web"
-            />
+            <div className="ka-media-reveal">
+              <BrowserFrame
+                src="/images/projects/wagoobot/web.png?v=prints"
+                alt="Wagoo web"
+              />
+            </div>
 
             <motion.div
               style={{ x: phoneX, y: phoneY }}

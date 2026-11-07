@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 export function MagneticCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = useState(false);
+  const [label, setLabel] = useState("");
   const pos = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const raf = useRef<number>(0);
@@ -19,8 +21,11 @@ export function MagneticCursor() {
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
-      const interactive = target?.closest("a, button, [data-cursor='hover']");
+      const interactive = target?.closest(
+        "a, button, [data-cursor='hover']",
+      ) as HTMLElement | null;
       setHovering(Boolean(interactive));
+      setLabel(interactive?.dataset.cursorLabel?.trim() || "");
     };
 
     const tick = () => {
@@ -31,6 +36,9 @@ export function MagneticCursor() {
       }
       if (ringRef.current) {
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) translate(-50%, -50%)`;
+      }
+      if (labelRef.current) {
+        labelRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) translate(-50%, -50%)`;
       }
       raf.current = requestAnimationFrame(tick);
     };
@@ -48,8 +56,21 @@ export function MagneticCursor() {
 
   return (
     <>
-      <div ref={dotRef} className={`ka-cursor ${hovering ? "is-hover" : ""}`} />
-      <div ref={ringRef} className={`ka-cursor-ring ${hovering ? "is-hover" : ""}`} />
+      <div
+        ref={dotRef}
+        className={`ka-cursor ${hovering ? "is-hover" : ""} ${label ? "is-label" : ""}`}
+      />
+      <div
+        ref={ringRef}
+        className={`ka-cursor-ring ${hovering ? "is-hover" : ""} ${label ? "is-label" : ""}`}
+      />
+      <div
+        ref={labelRef}
+        className={`ka-cursor-label ${label ? "is-visible" : ""}`}
+        aria-hidden
+      >
+        {label}
+      </div>
     </>
   );
 }

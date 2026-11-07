@@ -36,6 +36,7 @@ function WorkCaseBlock({
       transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       className="ka-work-panel"
       data-cursor="hover"
+      data-cursor-label={project.name}
       style={{
         background:
           index === 0
@@ -118,7 +119,14 @@ function WorkCaseBlock({
         </div>
 
         <div className="relative min-h-[300px] md:min-h-[380px] pb-8">
-          <motion.div style={{ y: imageY }} className="relative z-[1]">
+          <motion.div
+            style={{ y: imageY }}
+            className="relative z-[1] ka-media-reveal"
+            initial={{ clipPath: "inset(100% 0 0 0)" }}
+            whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+          >
             <BrowserFrame
               src={project.webImage}
               alt={`${project.name} ${webLabel}`}
