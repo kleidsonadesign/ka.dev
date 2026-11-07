@@ -1,50 +1,58 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "../../i18n/LanguageContext";
+import { useScene } from "../lib/SceneContext";
+import { type SceneId } from "../lib/scenes";
 import type { WorkCase } from "../../i18n/translations";
 import { BrowserFrame, PhoneFrame } from "./DeviceFrame";
 
-function WorkCaseBlock({
+function useDesktopJourney(minWidth = 1024) {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setEnabled(mq.matches && !reduced.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    reduced.addEventListener("change", sync);
+    return () => {
+      mq.removeEventListener("change", sync);
+      reduced.removeEventListener("change", sync);
+    };
+  }, [minWidth]);
+
+  return enabled;
+}
+
+function WorkCaseSlide({
   project,
   index,
   visitLabel,
   webLabel,
   mobileLabel,
+  compact,
 }: {
   project: WorkCase;
   index: number;
   visitLabel: string;
   webLabel: string;
   mobileLabel: string;
+  compact?: boolean;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], [120, -120]);
-  const phoneY = useTransform(scrollYProgress, [0, 1], [160, -90]);
-  const textY = useTransform(scrollYProgress, [0, 1], [90, -60]);
-  const textX = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [index % 2 === 0 ? -36 : 36, 0, index % 2 === 0 ? 28 : -28],
-  );
-  const imageScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.88, 1, 0.94]);
-  const phoneRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-10, -6, -2]);
-  const panelOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.35, 1, 1, 0.4]);
-  const glow = useTransform(scrollYProgress, [0.1, 0.5, 0.9], [0.1, 0.8, 0.15]);
-
   return (
-    <motion.article
-      ref={ref}
-      className="ka-work-panel"
+    <article
+      className={`ka-work-panel h-full ${compact ? "ka-work-slide-panel" : ""}`}
       data-scene={project.id}
       data-cursor="hover"
       data-cursor-label={project.name}
       style={{
-        opacity: panelOpacity,
         background:
           index === 0
             ? "radial-gradient(ellipse at 90% 0%, rgba(43,91,255,0.22), transparent 46%), linear-gradient(160deg, rgba(11,16,32,0.55), rgba(7,7,7,0.28))"
@@ -53,25 +61,12 @@ function WorkCaseBlock({
               : "radial-gradient(ellipse at 80% 20%, rgba(232,168,74,0.14), transparent 46%), linear-gradient(160deg, rgba(12,15,24,0.5), rgba(5,5,5,0.25))",
       }}
     >
-      <motion.div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          opacity: glow,
-          background:
-            index === 0
-              ? "radial-gradient(ellipse at 80% 20%, rgba(43,91,255,0.32), transparent 52%)"
-              : index === 1
-                ? "radial-gradient(ellipse at 20% 30%, rgba(46,180,110,0.22), transparent 55%)"
-                : "radial-gradient(ellipse at 75% 25%, rgba(232,168,74,0.2), transparent 55%)",
-        }}
-      />
-
       <div
-        className={`relative grid lg:grid-cols-2 gap-10 lg:gap-12 items-center ${
+        className={`relative grid lg:grid-cols-2 gap-8 lg:gap-12 items-center h-full ${
           index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
         }`}
       >
-        <motion.div style={{ y: textY, x: textX }}>
+        <div>
           <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="ka-eyebrow text-[var(--ka-cobalt)]">
               {String(index + 1).padStart(2, "0")}
@@ -82,10 +77,10 @@ function WorkCaseBlock({
             <span className="text-white/55 text-sm">{project.role}</span>
           </div>
 
-          <h3 className="ka-display text-[clamp(2.4rem,5vw,4rem)] text-white mb-4">
+          <h3 className="ka-display text-[clamp(2.2rem,4.6vw,3.8rem)] text-white mb-4">
             {project.name}
           </h3>
-          <p className="text-white/65 leading-relaxed mb-6 text-base md:text-lg">
+          <p className="text-white/65 leading-relaxed mb-6 text-base md:text-lg max-w-xl">
             {project.summary}
           </p>
 
@@ -125,51 +120,176 @@ function WorkCaseBlock({
               />
             </a>
           )}
-        </motion.div>
+        </div>
 
-        <div className="relative min-h-[300px] md:min-h-[380px] pb-8">
-          <motion.div
-            style={{ y: imageY, scale: imageScale }}
-            className="relative z-[1] ka-media-reveal"
-          >
+        <div className="relative min-h-[260px] md:min-h-[340px] pb-8">
+          <div className="relative z-[1] ka-media-reveal">
             <BrowserFrame
               src={project.webImage}
               alt={`${project.name} ${webLabel}`}
             />
-          </motion.div>
+          </div>
 
-          <motion.div
-            style={{ y: phoneY, rotate: phoneRotate }}
+          <div
             className={`absolute z-[2] -bottom-2 ${
               index % 2 === 0 ? "-left-1 md:-left-5" : "-right-1 md:-right-5"
             }`}
-            whileHover={{ scale: 1.03 }}
-            transition={{ type: "spring", stiffness: 200, damping: 18 }}
           >
             <PhoneFrame
               src={project.mobileImage}
               alt={`${project.name} ${mobileLabel}`}
             />
-          </motion.div>
+          </div>
         </div>
       </div>
-    </motion.article>
+    </article>
+  );
+}
+
+function WorkMore({
+  title,
+  items,
+}: {
+  title: string;
+  items: { name: string; url?: string; blurb: string }[];
+}) {
+  return (
+    <div className="mt-16 md:mt-20 pt-10 border-t border-white/10">
+      <p className="ka-eyebrow mb-6">{title}</p>
+      <div className="grid sm:grid-cols-3 gap-4">
+        {items.map((item, i) => {
+          const className = "ka-glow-card group rounded-2xl p-5 block";
+          const body = (
+            <>
+              <div className="flex items-start justify-between gap-3 relative z-[1]">
+                <h4 className="font-semibold text-white text-lg">{item.name}</h4>
+                {item.url && (
+                  <ArrowUpRight
+                    size={16}
+                    className="text-white/35 group-hover:text-[var(--ka-cobalt)] transition-colors"
+                  />
+                )}
+              </div>
+              <p className="mt-2 text-sm text-white/45 relative z-[1]">
+                {item.blurb}
+              </p>
+            </>
+          );
+
+          const onMove = (e: React.MouseEvent<HTMLElement>) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            e.currentTarget.style.setProperty(
+              "--local-x",
+              `${e.clientX - rect.left}px`,
+            );
+            e.currentTarget.style.setProperty(
+              "--local-y",
+              `${e.clientY - rect.top}px`,
+            );
+          };
+
+          if (item.url) {
+            return (
+              <motion.a
+                key={item.name}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                className={className}
+                onMouseMove={onMove}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.25 }}
+                transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -4 }}
+              >
+                {body}
+              </motion.a>
+            );
+          }
+
+          return (
+            <motion.div
+              key={item.name}
+              className={className}
+              onMouseMove={onMove}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ delay: i * 0.08 }}
+            >
+              {body}
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
 export function SelectedWork() {
   const { t } = useTranslation();
+  const { lockScene, unlockScene } = useScene();
+  const desktopJourney = useDesktopJourney();
+  const cases = t.work.cases;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0vw", `-${Math.max(cases.length - 1, 0) * 100}vw`],
+  );
+
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (!desktopJourney || cases.length === 0) return;
+    const idx = Math.min(
+      cases.length - 1,
+      Math.max(0, Math.round(value * (cases.length - 1))),
+    );
+    setActiveIndex(idx);
+    const id = cases[idx]?.id;
+    if (id) lockScene(id as SceneId);
+  });
+
+  useEffect(() => {
+    if (!desktopJourney) {
+      unlockScene();
+      return;
+    }
+
+    const node = containerRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) unlockScene();
+      },
+      { threshold: 0.05 },
+    );
+
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      unlockScene();
+    };
+  }, [desktopJourney, unlockScene]);
 
   return (
-    <section id="trabalho" className="ka-section">
-      <div className="ka-container">
+    <section id="trabalho" className="relative">
+      <div className="ka-container pt-[clamp(4.5rem,10vw,7.5rem)]">
         <motion.div
           data-scene="work"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2, margin: "-60px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-14 md:mb-20 max-w-3xl"
+          className="mb-10 md:mb-14 max-w-3xl"
         >
           <p className="ka-eyebrow mb-4">{t.work.eyebrow}</p>
           <h2 className="ka-display text-[clamp(2.2rem,5.5vw,4rem)] text-white mb-4">
@@ -179,10 +299,69 @@ export function SelectedWork() {
             {t.work.subtitle}
           </p>
         </motion.div>
+      </div>
 
-        <div className="space-y-10 md:space-y-14">
-          {t.work.cases.map((project, index) => (
-            <WorkCaseBlock
+      {desktopJourney ? (
+        <div
+          ref={containerRef}
+          className="ka-work-journey relative"
+          data-scene-rail=""
+          style={{ height: `${Math.max(cases.length, 1) * 100}vh` }}
+        >
+          <div className="ka-work-pin sticky top-0 h-[100svh] overflow-hidden">
+            <motion.div
+              className="ka-work-track flex h-full will-change-transform"
+              style={{ x, width: `${cases.length * 100}vw` }}
+            >
+              {cases.map((project, index) => (
+                <div
+                  key={project.id}
+                  className="ka-work-slide relative h-full shrink-0"
+                  style={{ width: "100vw" }}
+                >
+                  <div className="ka-container h-full flex items-center py-24">
+                    <div className="w-full max-h-[calc(100svh-8rem)] overflow-hidden">
+                      <WorkCaseSlide
+                        project={project}
+                        index={index}
+                        visitLabel={t.work.visit}
+                        webLabel={t.work.webLabel}
+                        mobileLabel={t.work.mobileLabel}
+                        compact
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            <div className="pointer-events-none absolute bottom-8 left-0 right-0 z-10">
+              <div className="ka-container flex items-center justify-between gap-4">
+                <p className="ka-eyebrow text-white/45">
+                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                  {String(cases.length).padStart(2, "0")} ·{" "}
+                  {cases[activeIndex]?.name}
+                </p>
+                <div className="flex items-center gap-2">
+                  {cases.map((project, index) => (
+                    <span
+                      key={project.id}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${
+                        index === activeIndex
+                          ? "w-10 bg-[var(--ka-cobalt)]"
+                          : "w-3 bg-white/25"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="ka-container space-y-10 md:space-y-14 pb-4">
+          {cases.map((project, index) => (
+            <WorkCaseSlide
               key={project.id}
               project={project}
               index={index}
@@ -192,76 +371,10 @@ export function SelectedWork() {
             />
           ))}
         </div>
+      )}
 
-        <div className="mt-20 pt-10 border-t border-white/10">
-          <p className="ka-eyebrow mb-6">{t.work.moreTitle}</p>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {t.work.more.map((item, i) => {
-              const className =
-                "ka-glow-card group rounded-2xl p-5 block";
-              const body = (
-                <>
-                  <div className="flex items-start justify-between gap-3 relative z-[1]">
-                    <h4 className="font-semibold text-white text-lg">{item.name}</h4>
-                    {item.url && (
-                      <ArrowUpRight
-                        size={16}
-                        className="text-white/35 group-hover:text-[var(--ka-cobalt)] transition-colors"
-                      />
-                    )}
-                  </div>
-                  <p className="mt-2 text-sm text-white/45 relative z-[1]">{item.blurb}</p>
-                </>
-              );
-
-              const onMove = (e: React.MouseEvent<HTMLElement>) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty(
-                  "--local-x",
-                  `${e.clientX - rect.left}px`,
-                );
-                e.currentTarget.style.setProperty(
-                  "--local-y",
-                  `${e.clientY - rect.top}px`,
-                );
-              };
-
-              if (item.url) {
-                return (
-                  <motion.a
-                    key={item.name}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={className}
-                    onMouseMove={onMove}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.25 }}
-                    transition={{ delay: i * 0.08 }}
-                    whileHover={{ y: -4 }}
-                  >
-                    {body}
-                  </motion.a>
-                );
-              }
-
-              return (
-                <motion.div
-                  key={item.name}
-                  className={className}
-                  onMouseMove={onMove}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.25 }}
-                  transition={{ delay: i * 0.08 }}
-                >
-                  {body}
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
+      <div className="ka-container pb-[clamp(4.5rem,10vw,7.5rem)]">
+        <WorkMore title={t.work.moreTitle} items={t.work.more} />
       </div>
     </section>
   );

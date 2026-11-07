@@ -1,4 +1,5 @@
 import { LanguageProvider } from "../i18n/LanguageContext";
+import { SceneProvider } from "./lib/SceneContext";
 import { AtmosphericBackground } from "./components/AtmosphericBackground";
 import { IntroOverlay } from "./components/IntroOverlay";
 import { MagneticCursor } from "./components/MagneticCursor";
@@ -15,22 +16,24 @@ import { Contact } from "./components/Contact";
 export default function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen overflow-x-hidden relative text-[var(--ka-text)]">
-        <AtmosphericBackground />
-        <MagneticCursor />
-        <IntroOverlay />
-        <SiteNav />
-        <main className="relative z-10">
-          <Hero />
-          <TechRibbon />
-          <SelectedWork />
-          <GitHubStats />
-          <Toolkit />
-          <Trajectory />
-          <Certifications />
-          <Contact />
-        </main>
-      </div>
+      <SceneProvider>
+        <div className="min-h-screen relative text-[var(--ka-text)]">
+          <AtmosphericBackground />
+          <MagneticCursor />
+          <IntroOverlay />
+          <SiteNav />
+          <main className="relative z-10">
+            <Hero />
+            <TechRibbon />
+            <SelectedWork />
+            <GitHubStats />
+            <Toolkit />
+            <Trajectory />
+            <Certifications />
+            <Contact />
+          </main>
+        </div>
+      </SceneProvider>
     </LanguageProvider>
   );
 }

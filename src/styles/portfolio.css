@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -28,6 +29,7 @@ body {
   text-rendering: optimizeLegibility;
   cursor: none;
   transition: background-color 0.9s var(--ka-ease);
+  overflow-x: clip;
 }
 
 a,
@@ -493,6 +495,29 @@ button {
   .ka-work-panel {
     padding: 2.5rem;
   }
+}
+
+.ka-work-slide-panel {
+  padding: 1.75rem 2rem;
+  max-height: calc(100svh - 8rem);
+}
+
+@media (min-width: 1280px) {
+  .ka-work-slide-panel {
+    padding: 2.25rem 2.5rem;
+  }
+}
+
+.ka-work-journey {
+  margin-top: 0.5rem;
+}
+
+.ka-work-pin {
+  z-index: 5;
+}
+
+.ka-work-track {
+  touch-action: pan-y;
 }
 
 .ka-editorial-panel {
