@@ -212,19 +212,6 @@ export function Hero() {
           data-cursor-label="Drag"
         >
           <motion.div
-            aria-hidden
-            className="ka-orbit-moon absolute -top-8 -left-6 md:-left-10 z-[3] h-14 w-14 md:h-16 md:w-16"
-            animate={{ opacity: [0.25, 1, 0.25] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <img
-              src="/images/ka-moon.png"
-              alt=""
-              className="h-full w-full object-contain drop-shadow-[0_0_24px_rgba(43,91,255,0.65)]"
-            />
-          </motion.div>
-
-          <motion.div
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="relative"
           >
