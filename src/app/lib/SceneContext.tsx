@@ -33,12 +33,12 @@ export function SceneProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const lockScene = useCallback((id: SceneId) => {
-    setLockedId(id);
-    setSceneIdState(id);
+    setLockedId((current) => (current === id ? current : id));
+    setSceneIdState((current) => (current === id ? current : id));
   }, []);
 
   const unlockScene = useCallback(() => {
-    setLockedId(null);
+    setLockedId((current) => (current === null ? current : null));
   }, []);
 
   const effectiveId = lockedId ?? sceneId;
@@ -65,4 +65,36 @@ export function useScene() {
     throw new Error("useScene must be used within SceneProvider");
   }
   return ctx;
+}
+
+/** Pick the closest [data-scene] section to the viewport center. */
+export function pickNearestSceneId(
+  excludeRail = true,
+): SceneId | null {
+  const nodes = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-scene]"),
+  ).filter((node) => (excludeRail ? !node.closest("[data-scene-rail]") : true));
+
+  if (!nodes.length) return null;
+
+  const center = window.innerHeight * 0.42;
+  let best: SceneId | null = null;
+  let bestDist = Number.POSITIVE_INFINITY;
+
+  for (const node of nodes) {
+    const id = node.dataset.scene;
+    if (!id || !(id in SCENES)) continue;
+    const rect = node.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+    const mid = (rect.top + rect.bottom) / 2;
+    const dist = Math.abs(mid - center);
+    if (dist < bestDist) {
+      bestDist = dist;
+      best = id as SceneId;
+    }
+  }
+
+  if (best) return best;
+  if (window.scrollY < window.innerHeight * 0.4) return "hero";
+  return null;
 }

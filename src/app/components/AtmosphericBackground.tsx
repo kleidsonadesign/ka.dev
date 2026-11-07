@@ -5,76 +5,49 @@ import {
   useMotionTemplate,
   useMotionValue,
 } from "motion/react";
-import { useEffect } from "react";
-import { useScene } from "../lib/SceneContext";
-import { SCENES, type SceneId } from "../lib/scenes";
-
-function isSceneId(value: string | null): value is SceneId {
-  return !!value && value in SCENES;
-}
+import { useEffect, useRef } from "react";
+import { pickNearestSceneId, useScene } from "../lib/SceneContext";
 
 export function AtmosphericBackground() {
   const { scene, locked, setSceneId } = useScene();
+  const lockedRef = useRef(locked);
   const bg = useMotionValue(scene.bg);
   const glow = useMotionValue(scene.glow);
   const glowAlt = useMotionValue(scene.glowAlt);
   const wash = useMotionTemplate`radial-gradient(ellipse at 50% 18%, ${glow} 0%, transparent 52%), radial-gradient(ellipse at 82% 72%, ${glowAlt} 0%, transparent 48%), radial-gradient(ellipse at 12% 88%, ${glow} 0%, transparent 42%)`;
 
+  lockedRef.current = locked;
+
   useEffect(() => {
-    const nodes = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-scene]"),
-    ).filter((node) => !node.closest("[data-scene-rail]"));
-
-    if (!nodes.length) return;
-
-    const ratios = new Map<Element, number>();
-
-    const pick = () => {
-      if (locked) return;
-
-      let best: Element | null = null;
-      let bestRatio = 0;
-      ratios.forEach((ratio, el) => {
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          best = el;
-        }
-      });
-
-      if (!best || bestRatio < 0.08) return;
-      const id = (best as HTMLElement).dataset.scene ?? null;
-      if (!isSceneId(id)) return;
-      setSceneId(id);
+    const syncFromDom = () => {
+      if (lockedRef.current) return;
+      const next = pickNearestSceneId();
+      if (next) setSceneId(next);
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          ratios.set(
-            entry.target,
-            entry.isIntersecting ? entry.intersectionRatio : 0,
-          );
-        }
-        pick();
-      },
-      {
-        threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 1],
-        rootMargin: "-18% 0px -28% 0px",
-      },
-    );
+    syncFromDom();
+    window.addEventListener("scroll", syncFromDom, { passive: true });
+    window.addEventListener("resize", syncFromDom);
 
-    nodes.forEach((node) => observer.observe(node));
-    pick();
+    return () => {
+      window.removeEventListener("scroll", syncFromDom);
+      window.removeEventListener("resize", syncFromDom);
+    };
+  }, [setSceneId]);
 
-    return () => observer.disconnect();
+  useEffect(() => {
+    if (!locked) {
+      const next = pickNearestSceneId();
+      if (next) setSceneId(next);
+    }
   }, [locked, setSceneId]);
 
   useEffect(() => {
     const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
     const controls = [
-      animate(bg, scene.bg, { duration: 0.95, ease }),
-      animate(glow, scene.glow, { duration: 1.05, ease }),
-      animate(glowAlt, scene.glowAlt, { duration: 1.05, ease }),
+      animate(bg, scene.bg, { duration: 0.65, ease }),
+      animate(glow, scene.glow, { duration: 0.75, ease }),
+      animate(glowAlt, scene.glowAlt, { duration: 0.75, ease }),
     ];
 
     document.documentElement.style.setProperty("--ka-journey-bg", scene.bg);
@@ -110,14 +83,14 @@ export function AtmosphericBackground() {
         aria-hidden
         className="fixed inset-0 z-[2] pointer-events-none overflow-hidden flex items-center justify-center"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.div
             key={scene.id}
-            className="ka-scene-name select-none"
-            initial={{ opacity: 0, y: 36, scale: 0.96, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -28, scale: 1.03, filter: "blur(8px)" }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="ka-scene-name select-none absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -16, filter: "blur(6px)" }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
             {scene.name}
           </motion.div>

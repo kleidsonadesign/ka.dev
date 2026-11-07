@@ -252,6 +252,7 @@ export function SelectedWork() {
     if (!desktopJourney) {
       x.set(0);
       progress.set(0);
+      setActiveIndex(0);
       unlockScene();
       return;
     }
@@ -260,28 +261,43 @@ export function SelectedWork() {
     if (!container) return;
 
     let frame = 0;
+    let pinned = false;
 
     const update = () => {
       frame = 0;
       const rect = container.getBoundingClientRect();
-      const total = Math.max(container.offsetHeight - window.innerHeight, 1);
-      const passed = Math.min(Math.max(-rect.top, 0), total);
-      const p = passed / total;
+      const vh = window.innerHeight;
+      const total = Math.max(container.offsetHeight - vh, 1);
+      const rawPassed = -rect.top;
       const width = window.innerWidth;
+
+      // Only pin-drive scenes while the sticky range is truly active.
+      // Outside it, release so hero / next sections own the background again.
+      if (rawPassed < 0 || rawPassed > total) {
+        x.set(rawPassed < 0 ? 0 : -(count - 1) * width);
+        progress.set(rawPassed < 0 ? 0 : 1);
+        setActiveIndex(rawPassed < 0 ? 0 : count - 1);
+        if (pinned) {
+          pinned = false;
+          unlockScene();
+        }
+        return;
+      }
+
+      const p = rawPassed / total;
       const translate = -p * (count - 1) * width;
+      const idx = Math.min(
+        count - 1,
+        Math.max(0, Math.round(p * (count - 1))),
+      );
 
       progress.set(p);
       x.set(translate);
-
-      const idx = Math.min(count - 1, Math.max(0, Math.round(p * (count - 1))));
-      setActiveIndex(idx);
+      setActiveIndex((current) => (current === idx ? current : idx));
+      pinned = true;
 
       const id = cases[idx]?.id;
       if (id) lockScene(id as SceneId);
-
-      if (p <= 0 || p >= 1) {
-        // keep locked while visually inside the pin range
-      }
     };
 
     const onScroll = () => {
@@ -300,21 +316,6 @@ export function SelectedWork() {
       unlockScene();
     };
   }, [desktopJourney, cases, count, lockScene, unlockScene, x, progress]);
-
-  useEffect(() => {
-    if (!desktopJourney) return;
-    const node = containerRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) unlockScene();
-      },
-      { threshold: 0.02 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [desktopJourney, unlockScene]);
 
   const slideWidth = viewportWidth || 1200;
 
