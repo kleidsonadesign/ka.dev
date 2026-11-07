@@ -15,25 +15,38 @@ function splitWords(text: string) {
 }
 
 function BrandLetters({ text }: { text: string }) {
-  const chars = text.split("");
+  const words = text.split(" ");
+  let charIndex = 0;
+
   return (
-    <span className="inline-flex flex-wrap" aria-label={text}>
-      {chars.map((char, i) => (
-        <motion.span
-          key={`${char}-${i}`}
-          className="inline-block"
-          initial={{ opacity: 0, y: "0.55em", rotateX: -40 }}
-          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{
-            duration: 0.55,
-            delay: 0.28 + i * 0.028,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          style={{ transformOrigin: "50% 100%" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
+    <span className="flex flex-wrap gap-x-[0.28em] gap-y-0" aria-label={text}>
+      {words.map((word, wi) => {
+        const letters = word.split("").map((char, ci) => {
+          const i = charIndex++;
+          return (
+            <motion.span
+              key={`${word}-${ci}`}
+              className="inline-block"
+              initial={{ opacity: 0, y: "0.55em", rotateX: -40 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{
+                duration: 0.55,
+                delay: 0.28 + i * 0.028,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{ transformOrigin: "50% 100%" }}
+            >
+              {char}
+            </motion.span>
+          );
+        });
+        charIndex += 1; // space between words
+        return (
+          <span key={`${word}-${wi}`} className="inline-flex whitespace-nowrap">
+            {letters}
+          </span>
+        );
+      })}
     </span>
   );
 }
